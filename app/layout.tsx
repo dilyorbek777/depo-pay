@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   title: 'Prime Pay | DEPOPAY',
   description: 'DEPOPAY e-wallet is a modern payment tool that allows you to conveniently and safely use Payme to pay for goods and services and make transfers.',
   icons: {
-    icon: '/favicon.png'
+    icon: 'https://raw.githubusercontent.com/dilyorbek777/depo-pay/main/public/favicon.png'
   },
   openGraph: {
     type: 'website',
     url: 'https://depo-pay.vercel.app',
     siteName: 'Prime Pay | DEPOPAY',
     
-    images: ['/depo-pay.png', ],
+    images: ['https://raw.githubusercontent.com/dilyorbek777/depo-pay/main/public/depo-pay.png', ],
   }
 }
 
