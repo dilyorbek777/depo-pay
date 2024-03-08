@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     locale: 'en_EN',
     images: 'https://raw.githubusercontent.com/dilyorbek777/depo-pay/main/public/depo-pay.png',
   },
+  creator: 'Dilyorbek Asfandiyorov',
+  publisher: 'DEPO ',
 }
 
 
