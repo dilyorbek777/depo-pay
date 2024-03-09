@@ -26,7 +26,7 @@ export default function Navbar() {
                 <div className={toggle ? "flex fixed w-full h-screen items-center justify-center top-0 left-0 flex-col bg-primary-foreground gap-16 z-50" : "flex items-center justify-between gap-16 max-lg:hidden"}>
                     <div className={toggle ? "flex flex-col items-center justify-center gap-16 font-bold text-primary" : "flex items-center justify-center gap-16 font-bold text-primary"}>
                         {links.map((link) => (
-                            <Link href={link.href} key={link.title} className="text-gray-800">{link.title}</Link>
+                            <Link href={link.href} onClick={() => setToggle(!toggle)} key={link.title} className="text-gray-800">{link.title}</Link>
                         ))}
                     </div>
                     <Button variant={'default'} className='bg-primary'>Login</Button>

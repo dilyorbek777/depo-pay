@@ -3,10 +3,14 @@ import { Button } from '../ui/button'
 import Image from 'next/image'
 import Cards from './cards'
 import PaymentData from './payment-data'
+import Whypp from './whypp'
+import Pros from './pros'
+import EyeProtection from './eyeProtection'
+
 
 export default function Hero() {
     return (
-        <div className='w-full h-screen bg-white px-7'>
+        <div className='w-full min-h-screen bg-white px-7'>
             <div className="max-w-[1440px] mx-auto bg-cvr rounded-2xl py-20 min-h-[80vh] flex justify-center items-start relative">
                 <div className="flex flex-col justify-center items-center py-5 gap-9">
                     <h1 className="text-6xl font-bold text-primary text-center max-sm:text-4xl ">Ready To Launch Your <br /> Online   <span className="text-white">Payment </span>App</h1>
@@ -21,6 +25,9 @@ export default function Hero() {
                 </div>
             </div>
             <PaymentData />
+            <Whypp />
+            <Pros />
+            <EyeProtection />
         </div>
     )
 }

@@ -12,7 +12,7 @@ const cards = [
         desc: 'Aspernatur sit adipisci quaerat unde Redug Lagre dolor sit amets consectetus. Agencies define their new business'
     },
     {
-        img: '/send-mo.png',
+        img: '/Icon-2.png',
         title: 'Send money',
         desc: 'Aspernatur sit adipisci quaerat unde Redug Lagre dolor sit amets consectetus. Agencies define their new business'
     },
