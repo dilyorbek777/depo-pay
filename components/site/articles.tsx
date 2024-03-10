@@ -1,15 +1,23 @@
-import { BlogsType } from '@/interfaces';
-import Image from 'next/image';
-import Link from 'next/link';
-import CustomImage from './customImage';
+// import { BlogsType } from '@/interfaces';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import CustomImage from './customImage';
+
+
+// export default function Articles() {
+//     return (
+//         <div>Articles</div>
+//     )
+// }
 
 import React from 'react'
 
 export default function Articles() {
-    return (
-        <div>Articles</div>
-    )
+  return (
+    <div>Articles</div>
+  )
 }
+
 
 
 // export default async function Articles() {
