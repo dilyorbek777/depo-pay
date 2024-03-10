@@ -5,7 +5,7 @@ import React from 'react'
 import CustomImage from './customImage';
 
 export default async function Articles() {
-    const data: BlogsType[] = await fetch('http://localhost:3000/api/blogs').then(res => res.json())
+    const data: BlogsType[] = await fetch(process.env.NEXT_DOMAIN+'/api/blogs').then(res => res.json())
     console.log(data);
     const drat = []
 
