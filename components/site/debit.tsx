@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react'
-import Image from 'next/image'
 import React from 'react'
+import CustomImage from './customImage'
 
 const debitObj = {
     
@@ -28,7 +28,9 @@ export default function Debit() {
                     </div>
                 </div>
                 <div className="w-1/2 max-lg:w-2/3 max-md:w-full">
-                    <Image src={debitObj.image} width={1000}  height={500} alt="cards" className="rounded-3xl w-full" />
+                    
+                    <CustomImage img={debitObj.image} title={debitObj.options[0]} nameclass="rounded-3xl w-full"  /> 
+
                 </div>
             </div>
         </div>

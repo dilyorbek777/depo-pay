@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
 import { Play } from 'lucide-react'
+import CustomImage from './customImage'
 
 export default function PaymentData() {
     return (
@@ -14,7 +15,9 @@ export default function PaymentData() {
                     Watch demo</div>
             </div>
             <div className="w-1/2 max-lg:w-full flex justify-center items-center">
-                <Image src="/mbimg.png" alt="payment-data" width={500} height={500} />
+                {/* <Image src="/" alt="payment-data" width={500} height={500} /> */}
+                <CustomImage img={'/mbimg.png'} title={' '} nameclass="w-1/2 max-md:w-2/3"  /> 
+
             </div>
         </div>
     )

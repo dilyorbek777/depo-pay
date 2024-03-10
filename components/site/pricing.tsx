@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
+import CustomImage from './customImage'
 
 const prices = [
     {
@@ -52,7 +53,8 @@ export default function Pricing() {
                     {prices.map((price, index) => (
                         <div key={index} className="w-full h-full bg-gray-200 rounded-lg p-11 flex items-center justify-center flex-col gap-7">
                             <div className="flex w-full items-center gap-5">
-                                <Image src={price.img} alt={price.features.join(' ')} className='w-full' width={1000} height={100} />
+                                <CustomImage img={price.img} title={price.features.join(' ')} nameclass="w-full"  /> 
+
                             </div>
                             <div className="flex w-full items-center justify-between">
                                 <p className="text-primary text-3xl font-bold ">{price.price}</p>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import CustomImage from './customImage'
 
 const cards = [
     { title: 'Integration other', description: 'Want something now but the sale ends before payday? Choose Pay in 4 at checkout with millions of online stores and split the cost into 4 interest-free payments.' },
@@ -20,7 +21,11 @@ export default function Whypp() {
             <div className="grid grid-cols-3 gap-10 max-lg:grid-cols-2 max-md:grid-cols-1">
                 {cards.map((card, index) => (
                     <div key={index} className="flex flex-col items-center gap-5  justify-center  min-h-[300px]">
-                        {card.img && <Image src={card.img} alt="card" width={500} height={100} className={card.title == undefined ? "w-80 h-auto max-md:w-8/12 max-[500px]:w-11/12" : "max-[500px]:w-11/12 max-md:w-80 max-md:h-36 w-60 h-28 object-cover rounded-md"} />}
+                        {card.img &&
+                            <CustomImage img={card.img} title={card.title || "nearlyer"} nameclass={card.title == undefined ? "w-80 h-auto max-md:w-8/12 max-[500px]:w-11/12" : "max-[500px]:w-11/12 max-md:w-80 max-md:h-36 w-60 h-28 object-cover rounded-md"} />
+
+                        }
+                        {/* {card.img && <Image src={card.img} alt="card" width={500} height={100} className= />} */}
                         <h1 className="text-2xl font-bold text-gray-300">{card.title}</h1>
                         <p className="text-gray-500">{card.description}</p>
                     </div>

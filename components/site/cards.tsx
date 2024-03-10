@@ -1,4 +1,5 @@
 import Image from "next/image"
+import CustomImage from "./customImage"
 
 const cards = [
     {
@@ -22,8 +23,9 @@ export default function Cards() {
     return (
         <div className="flex items-center justify-center w-full flex-wrap gap-10">
             {cards.map((card, index) => (
-                <div key={index} className="max-w-96 flex flex-col items-center justify-center gap-8">
-                    <Image src={card.img} alt={card.title} width={100} height={100} />
+                <div key={index} className="max-w-96 flex flex-col items-center justify-center gap-8 ">
+                    {/* <Image src={card.img} alt={card.title} width={100} height={100} /> */}
+                    <CustomImage img={card.img} title={card.title} nameclass="w-24"  /> 
                     <div className="flex flex-col items-center justify-center gap-1">
                         <h1 className="text-2xl text-center font-bold">{card.title}</h1>
                         <p className="text-center">{card.desc}</p>
