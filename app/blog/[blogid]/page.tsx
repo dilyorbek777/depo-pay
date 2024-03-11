@@ -38,7 +38,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       type: 'website',
       url: `https://depo-pay.vercel.app/blog/${params.blogid}`,
       locale: 'en_EN',
-      images: `https://raw.githubusercontent.com/dilyorbek777/depo-pay/main/public/blogs/${res.img}`,
+      images: `https://raw.githubusercontent.com/dilyorbek777/depo-pay/main/public${res.img}`,
     },
     creator: 'Dilyorbek Asfandiyorov',
     publisher: 'DEPO ',
