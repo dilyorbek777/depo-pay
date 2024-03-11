@@ -6,7 +6,7 @@ export async function GET(
 ) {
 
     const blog = blogs.find(
-        ( blog )=> blog.id === parseInt(params.id)
+        (blog) => blog.id === parseInt(params.id)
     );
     return Response.json(blog);
 
