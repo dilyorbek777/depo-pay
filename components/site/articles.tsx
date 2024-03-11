@@ -11,6 +11,8 @@ export default async function Articles() {
     const data: BlogsType[] = await fetch('https://depo-pay.vercel.app/api/blogs').then(res => res.json())
     console.log(data);
     const drat = []
+    const drow = data.slice(3, data.length)
+    console.log(drow);
 
     for (let index = 0; index < 3; index++) {
         const element = data[index];
