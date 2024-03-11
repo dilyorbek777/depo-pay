@@ -9,7 +9,7 @@ export default function News({ data }: {
     return (
         <div className='flex items-center justify-center flex-col py-20'>
             <h1 className='text-5xl text-primary font-bold'><span className='text-gray-300'>Latest</span> News</h1>
-            <div className="grid grid-cols-2 items-center justify-center gap-10 py-20">
+            <div className="grid grid-cols-2 items-center justify-center gap-10 py-20 max-lg:grid-cols-1">
                 {data.map((l) => (
                     <Link href={'/blog/' + l.id} key={l.id}>
                         <div className="w-full flex flex-col items-center gap-5">
