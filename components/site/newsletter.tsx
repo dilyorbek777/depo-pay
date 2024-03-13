@@ -3,7 +3,7 @@ import { Button } from '../ui/button'
 
 export default function Newsletter() {
     return (
-        <div>
+        <div className='w-full px-7'>
             <section className=" max-w-[1440px] mx-auto text-gray-600 body-font bg-background px-7 py-16 rounded-xl">
 
                 <div className="flex items-center justify-between max-xl:flex-col gap-10">

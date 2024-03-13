@@ -9,8 +9,8 @@ import { Menu, X } from 'lucide-react'
 
 const links = [
     { title: "Blog", href: "/blog" },
-    { title: "Licenses", href: "/licenses" },
-    { title: "Changelog", href: "/changelog" }
+    { title: "Why us", href: "/whyus" },
+    { title: "Pricing", href: "/pricing" }
 ]
 export default function Navbar() {
     const [toggle, setToggle] = useState(false)

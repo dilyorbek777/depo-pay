@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
 
+import Newsletter from '@/components/site/newsletter'
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -49,7 +50,9 @@ export default function RootLayout({
 
         <Navbar />
         <main>{children}</main>
+        <Newsletter />
         <Footer />
+
       </body>
     </html>
   );
