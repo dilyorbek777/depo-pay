@@ -20,7 +20,8 @@ export default function Hero() {
             A simple yet modern solution to showcase your app
           </p>
           <Button
-            area-label={"Get Started"}
+            area-label={"Get Started"} 
+            aria-label="Get Started"
             className="bg-primary text-white px-5 py-3 rounded-md"
           >
             Get Started
