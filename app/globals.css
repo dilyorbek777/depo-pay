@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .bg-cvr{
-  background-image: url('../public/background.png');
+  background-image: url('../public/background.webp');
   background-size: cover;
   background-position: center;
 }
