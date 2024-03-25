@@ -15,7 +15,7 @@ export default function Hero() {
                 <div className="flex flex-col justify-center items-center py-5 gap-9">
                     <h1 className="text-6xl font-bold text-primary text-center max-sm:text-4xl ">Ready To Launch Your <br /> Online   <span className="text-white">Payment </span>App</h1>
                     <p className="text-2xl text-primary text-center max-sm:text-lg">A simple yet modern solution to showcase your app</p>
-                    <Button className="bg-primary text-white px-5 py-3 rounded-md">Get Started</Button>
+                    <Button area-label={'Get Started'} className="bg-primary text-white px-5 py-3 rounded-md">Get Started</Button>
                 </div>
                 <CustomImage nameclass='absolute top-0 left-1/2 transform -translate-x-[48%] translate-y-[40%] z-20 max-w-[500px] max-lg:max-w-[350px] max-lg:translate-y-[70%] max-[400px]:translate-y-[85%] max-[400px]:w-[300px]' img='/hero.png' title='Ready To Launch Your '  />
             </div>
