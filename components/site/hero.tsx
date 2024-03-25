@@ -21,7 +21,7 @@ export default function Hero() {
           </p>
           <Button
             area-label={"Get Started"} 
-            
+            role="none"
             className="bg-primary text-white px-5 py-3 rounded-md"
           >
             Get Started

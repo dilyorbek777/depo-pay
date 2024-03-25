@@ -65,7 +65,7 @@ export default function Pricing() {
                                     <li key={index} className='text-lg text-gray-500 my-4'>{feature}</li>
                                 ))}
                             </ul>
-                            <Button className='w-full'>
+                            <Button className='w-full' role="none">
                                 Get Started
                             </Button>
                         </div>

@@ -11,7 +11,7 @@ export default function NotFound() {
                 <p className='text-xl max-sm:text-sm text-center'>This is not the web page that you are looking for. Click the button below to go to the main web page </p>
                 <Link aria-label={'Home Page'} href={'/'} className='max-sm:w-full'>
 
-                    <Button area-label={'Home Page'}  variant={'default'} className='w-full px-10'>Home Page</Button>
+                    <Button area-label={'Home Page'} role="none" variant={'default'} className='w-full px-10'>Home Page</Button>
 
                 </Link>
             </div>
