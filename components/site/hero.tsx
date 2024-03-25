@@ -19,7 +19,7 @@ export default function Hero() {
           <p className="text-2xl text-primary text-center max-sm:text-lg">
             A simple yet modern solution to showcase your app
           </p>
-          <Button
+          <Button id="get-started"
             area-label={"Get Started"} 
             role="none"
             className="bg-primary text-white px-5 py-3 rounded-md"

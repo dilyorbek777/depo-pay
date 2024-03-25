@@ -12,7 +12,7 @@ export default function Newsletter() {
                     </h1>
                     <div className="flex items-center justify-center  max-md:w-full gap-5 w-1/3 max-md:flex-col">
                         <input type="text" placeholder="Enter your email" className="max-md:w-full w-96 outline-none h-14 rounded-lg px-5 bg-white" />
-                        <Button role="none" className="flex-shrink-0 text-white bg-primary border-0 py-2 px-8 max-md:w-full focus:outline-none hover:bg-primary/50 h-14  rounded-lg text-lg mt-10 sm:mt-0">Send</Button>
+                        <Button id='send' role="none" className="flex-shrink-0 text-white bg-primary border-0 py-2 px-8 max-md:w-full focus:outline-none hover:bg-primary/50 h-14  rounded-lg text-lg mt-10 sm:mt-0">Send</Button>
                     </div>
                 </div>
 
