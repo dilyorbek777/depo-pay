@@ -15,8 +15,7 @@ export default function PaymentData() {
                     Watch demo</div>
             </div>
             <div className="w-1/2 max-lg:w-full flex justify-center items-center">
-                {/* <Image src="/" alt="payment-data" width={500} height={500} /> */}
-                <CustomImage img={'/mbimg.png'} title={' '} nameclass="w-1/2 max-md:w-2/3"  /> 
+                <CustomImage img={'/mbimg.png'} title={'payment-data'} nameclass="w-1/2 max-md:w-2/3"  /> 
 
             </div>
         </div>
