@@ -21,7 +21,7 @@ export default function Hero() {
           </p>
           <Button
             area-label={"Get Started"} 
-            aria-label="Get Started"
+            
             className="bg-primary text-white px-5 py-3 rounded-md"
           >
             Get Started
