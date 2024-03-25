@@ -18,7 +18,7 @@ export default function CustomImage({
             ? 'scale-110 blur-2xl grayscale'
             : 'scale-100 blur-0 grayscale-0'
             }}`}
-            onLoad={() => setIsLoading(false)} width={1000} height={100} />
+            onLoad={() => setIsLoading(false)} width={500} height={100} />
 
     )
 }
