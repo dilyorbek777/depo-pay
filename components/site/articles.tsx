@@ -26,7 +26,7 @@ export default async function Articles() {
             <div className="flex max-xl:flex-col  items-center justify-center gap-10">
                 <div className="flex w-1/2 max-xl:w-2/3 max-md:w-full">
                     {data.map((l) => (
-                        <Link href={'/blog/' + l.id} key={l.id}>
+                        <Link aria-label={'Read More'} href={'/blog/' + l.id} key={l.id}>
                             {l.id === data.length && <div className="w-full flex flex-col items-center gap-5">
                                 <CustomImage img={l.img} title={l.title} nameclass='w-full ' />
                                 <p className='text-[#7D5FFF] bg-[#E5DFF4] px-3 py-1 rounded-full'>{l.category}</p>
@@ -39,7 +39,7 @@ export default async function Articles() {
                 <div className="flex w-1/2 max-xl:w-2/3 max-md:w-full flex-col items-center justify-center gap-10">
 
                     {drat.map((item) => (
-                        <Link href={'/blog/' + item.id} key={item.id} className="w-full flex  max-sm:flex-col justify-between items-center gap-5">
+                        <Link aria-label={'Read More'} href={'/blog/' + item.id} key={item.id} className="w-full flex  max-sm:flex-col justify-between items-center gap-5">
                             <CustomImage nameclass="ounded-3xl max-lg:h-auto w-52 h-52 max-lg:w-full object-cover" img={item.img} title={item.title} />
                             <div className="flex flex-col items-center justify-between w-full gap-5">
 

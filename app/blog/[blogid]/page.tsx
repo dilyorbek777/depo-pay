@@ -96,7 +96,7 @@ export default async function DetailBlog({ params }: Props) {
         <>
           {drat.map((item) => (
             <>
-              {item.category === res.category && item.id !== res.id && <Link href={'/blog/' + item.id} key={item.id} className="w-full flex flex-col justify-between items-center gap-5">
+              {item.category === res.category && item.id !== res.id && <Link aria-label={'Read More'} href={'/blog/' + item.id} key={item.id} className="w-full flex flex-col justify-between items-center gap-5">
                 <CustomImage nameclass="ounded-3xl w-full h-52 max-sm:h-auto max-lg:h-80 max-lg:w-full object-cover" img={item.img} title={item.title} />
                 <div className="flex flex-col items-center justify-between w-full gap-5">
 

@@ -9,7 +9,7 @@ export default function NotFound() {
                 <h1 className='text-[200px] max-sm:text-7xl  font-black text-center text-primary'>404 </h1>
                 <h2 className='text-3xl font-semibold max-sm:text-xl text-center'>Oops! Page not found</h2>
                 <p className='text-xl max-sm:text-sm text-center'>This is not the web page that you are looking for. Click the button below to go to the main web page </p>
-                <Link href={'/'} className='max-sm:w-full'>
+                <Link aria-label={'Home Page'} href={'/'} className='max-sm:w-full'>
 
                     <Button area-label={'Home Page'} variant={'default'} className='w-full px-10'>Home Page</Button>
 
