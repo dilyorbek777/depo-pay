@@ -1,5 +1,8 @@
+'use client'
+
 import Image from "next/image"
 import CustomImage from "./customImage"
+import { motion } from "framer-motion"
 
 const cards = [
     {
@@ -23,13 +26,20 @@ export default function Cards() {
     return (
         <div className="flex items-center justify-center w-full flex-wrap gap-10">
             {cards.map((card, index) => (
-                <div key={index} className="max-w-96 flex flex-col items-center justify-center gap-8 ">
+                <motion.div 
+                    key={index} 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    className="max-w-96 flex flex-col items-center justify-center gap-8 "
+                >
                     <CustomImage img={card.img} title={card.title} nameclass="w-24"  /> 
                     <div className="flex flex-col items-center justify-center gap-1">
                         <h1 className="text-2xl text-center font-bold">{card.title}</h1>
                         <p className="text-center">{card.desc}</p>
                     </div>
-                </div>
+                </motion.div>
             ))}
         </div>
     )

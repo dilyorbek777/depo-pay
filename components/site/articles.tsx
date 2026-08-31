@@ -9,7 +9,7 @@ import News from './news';
 
 
 export default async function Articles() {
-    const data: BlogsType[] = await fetch('https://depo-pay.vercel.app/api/blogs', { cache: "no-store" }).then(res => res.json())
+    const data: BlogsType[] = await fetch('http://localhost:3000/api/blogs', { cache: "no-store" }).then(res => res.json())
     console.log(data);
     const drat = []
     const drow = data.slice(3, data.length)
