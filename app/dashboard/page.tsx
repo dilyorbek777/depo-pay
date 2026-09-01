@@ -154,10 +154,10 @@ export default function DashboardPage() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="profile" className="w-full">
+          <Tabs defaultValue="cards" className="w-full">
             <TabsList className="grid w-full grid-cols-5 mb-8">
-              <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="cards">Cards</TabsTrigger>
+              <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="transfer">Transfer</TabsTrigger>
               <TabsTrigger value="topup">Top-up</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>

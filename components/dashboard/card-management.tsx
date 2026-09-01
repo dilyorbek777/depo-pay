@@ -94,49 +94,9 @@ export default function CardManagement() {
     <div className="w-full max-w-4xl mx-auto p-6">
       <h2 className="text-3xl font-bold mb-6">Card Management</h2>
 
-      {/* Add New Card Form */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 className="text-xl font-semibold mb-4">Add New Card</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Initial Balance</label>
-            <input
-              type="number"
-              value={newCard.balance}
-              onChange={(e) => setNewCard({ ...newCard, balance: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border rounded-md"
-              placeholder="0.00"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Card Color</label>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={newCard.color}
-                onChange={(e) => setNewCard({ ...newCard, color: e.target.value })}
-                className="w-12 h-10 border rounded-md cursor-pointer"
-              />
-              <input
-                type="text"
-                value={newCard.color}
-                onChange={(e) => setNewCard({ ...newCard, color: e.target.value })}
-                className="flex-1 px-3 py-2 border rounded-md"
-                placeholder="#3b82f6"
-              />
-            </div>
-          </div>
-        </div>
-        <Button
-          onClick={handleAddCard}
-          className="mt-4 w-full md:w-auto"
-        >
-          Add Card
-        </Button>
-      </div>
 
       {/* Existing Cards */}
-      <div className="space-y-4">
+      <div className="space-y-4 mb-6">
         <h3 className="text-xl font-semibold">Your Cards ({cards?.length || 0})</h3>
 
         {!cards || cards.length === 0 ? (
@@ -234,6 +194,48 @@ export default function CardManagement() {
           </div>
         )}
       </div>
+      {/* Add New Card Form */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 className="text-xl font-semibold mb-4">Add New Card</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Initial Balance</label>
+            <input
+              type="number"
+              value={newCard.balance}
+              onChange={(e) => setNewCard({ ...newCard, balance: parseFloat(e.target.value) || 0 })}
+              className="w-full px-3 py-2 border rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Card Color</label>
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                value={newCard.color}
+                onChange={(e) => setNewCard({ ...newCard, color: e.target.value })}
+                className="w-12 h-10 border rounded-md cursor-pointer"
+              />
+              <input
+                type="text"
+                value={newCard.color}
+                onChange={(e) => setNewCard({ ...newCard, color: e.target.value })}
+                className="flex-1 px-3 py-2 border rounded-md"
+                placeholder="#3b82f6"
+              />
+            </div>
+          </div>
+        </div>
+        <Button
+          onClick={handleAddCard}
+          className="mt-4 w-full md:w-auto"
+        >
+          Add Card
+        </Button>
+      </div>
+
+
     </div>
   );
 }
