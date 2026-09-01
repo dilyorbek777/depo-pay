@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as newsletter from "../newsletter.js";
+import type * as posts from "../posts.js";
 import type * as users from "../users.js";
 
 import type {
@@ -17,6 +19,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  newsletter: typeof newsletter;
+  posts: typeof posts;
   users: typeof users;
 }>;
 

@@ -9,20 +9,36 @@ export default defineSchema({
     email: v.string(),
     profileImg: v.optional(v.string()),
     registeredAt: v.number(),
-    
+
     // Additional user data
     role: v.string(), // "user" or "admin"
   })
     .index("by_user_id", ["user_id"])
     .index("by_email", ["email"]),
-  
+
+  posts: defineTable({
+    id: v.string(),
+    title: v.string(),
+    description: v.string(),
+    category: v.string(),
+    imageUrl: v.string(),
+    type: v.union(v.literal("news"), v.literal("blog")),
+    createdAt: v.number(),
+  }),
+
+  subscribers: defineTable({
+    email: v.string(),
+    subscribedAt: v.number(),
+    status: v.optional(v.string()),
+  }),
+
   cards: defineTable({
     // Card details
     number16digit: v.string(), // Unique 16-digit card number
     balance: v.number(),
     color: v.string(), // Card color (hex code or color name)
     holderName: v.string(), // Card holder name from user details
-    
+
     // Card metadata
     user_id: v.string(), // Reference to user
     createdAt: v.number(), // Creation timestamp
@@ -30,7 +46,9 @@ export default defineSchema({
   })
     .index("by_user_id", ["user_id"])
     .index("by_card_number", ["number16digit"]),
-  
+
+
+
   transfers: defineTable({
     // Transfer details
     fromCardId: v.id("cards"),
@@ -51,3 +69,5 @@ export default defineSchema({
     .index("by_to_user", ["toUserId"])
     .index("by_timestamp", ["timestamp"]),
 });
+
+
