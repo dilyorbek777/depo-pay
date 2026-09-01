@@ -27,7 +27,7 @@ export default function WalletCardComponent() {
   ];
 
   return (
-    <div className="flex justify-center items-center py-16 bg-slate-100 min-h-screen">
+    <div className="flex justify-center items-center py-16 bg-transparent max-md:hidden min-h-screen">
       {/* Outer Wrapper with Background Gradient Card */}
       <div className="relative flex justify-center items-center">
         {/* Colorful Gradient Backdrop */}

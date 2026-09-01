@@ -15,7 +15,7 @@ import {
 
 export default function PhoneComponent() {
   return (
-    <div className="flex justify-center items-center py-10 bg-transparent min-h-screen ">
+    <div className="flex justify-center items-center py-10 max-md:hidden bg-transparent min-h-screen ">
       {/* Phone Shell */}
       <div className="relative w-[360px] h-[740px] bg-white rounded-[48px] p-4  inset-shadow-sm inset-shadow-indigo-500/50 shadow-sm shadow-indigo-200 border-[8px] border-slate-200 flex flex-col justify-between overflow-hidden">
         

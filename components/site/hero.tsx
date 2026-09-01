@@ -18,7 +18,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="max-w-[1440px] mx-auto bg-cvr bg-blue-300 rounded-2xl py-20 min-h-[80vh] flex justify-center items-start relative"
+        className="max-w-[1440px] mx-auto bg-cvr bg-blue-300 rounded-2xl py-20 min-h-[80vh] max-md:min-h-fit flex justify-center items-start relative"
       >
         <div className="flex flex-col justify-center  items-center py-5 gap-9">
           <motion.h1
@@ -60,7 +60,7 @@ export default function Hero() {
         </div>
       </motion.div>
       <ScrollAnimation direction="up" delay={0.2}>
-        <div className="max-w-[1440px] mx-auto rounded-2xl bg-background py-20 h-screen flex justify-center items-end mt-12 max-xl:h-[130vh] max-lg:min-h-screen">
+        <div className="max-w-[1440px] mx-auto rounded-2xl bg-background py-20 h-screen flex justify-center items-end mt-12 max-md:items-center max-md:h-fit max-xl:h-[130vh] max-lg:min-h-screen">
           <div className="flex flex-col justify-center items-center py-5 gap-9 px-2">
             <Cards />
           </div>
