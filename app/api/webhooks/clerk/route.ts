@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { fetchMutation, fetchQuery } from "convex/nextjs";
-import { api } from "../../convex/_generated/api";
+import { api } from "@/convex/_generated/api";
+import { Webhook } from "svix";
 
 export async function POST(req: NextRequest) {
   // Get the headers
@@ -22,8 +23,7 @@ export async function POST(req: NextRequest) {
   const body = JSON.stringify(payload);
 
   // Create a new Svix instance with your secret.
-  // Note: You'll need to install svix: npm install svix
-  const wh = new (require("svix").Webhook)(process.env.CLERK_WEBHOOK_SECRET || "");
+  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET || "");
 
   let evt: any;
 
