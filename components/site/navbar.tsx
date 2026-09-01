@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Menu, X } from 'lucide-react'
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 
 const links = [
@@ -28,8 +29,26 @@ export default function Navbar() {
                         {links.map((link) => (
                             <Link aria-label={'Nav Link'} href={link.href} onClick={() => setToggle(false)} key={link.title} className="text-gray-800">{link.title}</Link>
                         ))}
+                        <SignedIn>
+                            <Link aria-label={'Dashboard'} href="/dashboard" onClick={() => setToggle(false)} className="text-gray-800">Dashboard</Link>
+                        </SignedIn>
                     </div>
-                    <Button id='login' role="none" area-label={'Login'} variant={'default'} className='bg-primary'>Login</Button>
+                    <div className="flex items-center gap-4">
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <Button id='login' role="none" area-label={'Login'} variant={'default'} className='bg-primary'>Login</Button>
+                            </SignInButton>
+                            <SignUpButton mode="modal">
+                                <Button id='signup' role="none" area-label={'Sign Up'} variant={'outline'} className='border-primary text-primary'>Sign Up</Button>
+                            </SignUpButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <Link href="/dashboard">
+                                <Button id='dashboard' role="none" area-label={'Dashboard'} variant={'default'} className='bg-primary'>Dashboard</Button>
+                            </Link>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                    </div>
                     <div className={toggle ? "flex absolute top-5 justify-between  px-7 w-full left-0" : "hidden"}>
                         <Link aria-label={'Home Page'} href='/' className="flex ">
                             <Image src={'/Logo.svg'} alt='Logo' width={1000} className='w-40 h-10' height={0} />

@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
+import { ClerkProvider } from "@clerk/nextjs";
+import ConvexClientProvider from "@/components/providers/convex-provider";
+import { UserSync } from "@/components/providers/user-sync";
 
 import Newsletter from '@/components/site/newsletter'
 const inter = Inter({ subsets: ["latin"] });
@@ -45,15 +48,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <ClerkProvider>
+      <ConvexClientProvider>
+        <UserSync />
+        <html lang="en">
+          <body className={inter.className}>
 
-        <Navbar />
-        <main>{children}</main>
-        <Newsletter />
-        <Footer />
+            <Navbar />
+            <main>{children}</main>
+            <Newsletter />
+            <Footer />
 
-      </body>
-    </html>
+          </body>
+        </html>
+      </ConvexClientProvider>
+    </ClerkProvider>
   );
 }
