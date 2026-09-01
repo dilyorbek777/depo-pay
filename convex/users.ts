@@ -103,18 +103,51 @@ export const topUpCard = mutation({
   args: {
     cardId: v.id("cards"),
     amount: v.number(),
+    sessionId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const card = await ctx.db.get(args.cardId);
-    
+
     if (!card) {
       throw new Error("Card not found");
     }
 
+    // Check if this session has already been processed to prevent double updates
+    if (args.sessionId) {
+      const existingTopUps = await ctx.db
+        .query("transfers")
+        .withIndex("by_from_user", (q) => q.eq("fromUserId", card.user_id))
+        .collect();
+
+      const alreadyProcessed = existingTopUps.some(
+        (transfer) => transfer.metadata?.sessionId === args.sessionId
+      );
+
+      if (alreadyProcessed) {
+        console.log(`Session ${args.sessionId} already processed, skipping`);
+        return { newBalance: card.balance, skipped: true };
+      }
+    }
+
     const newBalance = card.balance + args.amount;
-    
+
     await ctx.db.patch(args.cardId, {
       balance: newBalance,
+    });
+
+    // Record this top-up as a transfer for tracking
+    await ctx.db.insert("transfers", {
+      fromUserId: card.user_id,
+      toUserId: card.user_id,
+      fromCardId: args.cardId,
+      toCardId: args.cardId,
+      fromCardNumber: card.number16digit,
+      toCardNumber: card.number16digit,
+      amount: args.amount,
+      fee: 0,
+      totalDeducted: args.amount,
+      timestamp: Date.now() / 1000,
+      metadata: { sessionId: args.sessionId, type: "topup" },
     });
 
     return { newBalance };

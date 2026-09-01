@@ -40,11 +40,12 @@ export default defineSchema({
     amount: v.number(),
     fee: v.number(),
     totalDeducted: v.number(),
-    
+
     // Transfer metadata
     fromUserId: v.string(),
     toUserId: v.string(),
     timestamp: v.number(),
+    metadata: v.optional(v.any()),
   })
     .index("by_from_user", ["fromUserId"])
     .index("by_to_user", ["toUserId"])

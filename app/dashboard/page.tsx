@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
@@ -11,10 +11,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogFooter } from "@/components/ui/dialog"
+import { useSearchParams } from "next/navigation"
 
 export default function DashboardPage() {
   const { isSignedIn, userId } = useAuth();
   const { user } = useUser();
+  const searchParams = useSearchParams();
   const userData = useQuery(api.users.getUserByClerkId,
     userId ? { user_id: userId } : "skip"
   );
@@ -37,6 +39,35 @@ export default function DashboardPage() {
   const [topUpAmount, setTopUpAmount] = useState<string>("");
   const [topUpError, setTopUpError] = useState<string>("");
   const [topUpLoading, setTopUpLoading] = useState(false);
+  const topUpCard = useMutation(api.users.topUpCard);
+
+  // Handle Stripe payment success return
+  useEffect(() => {
+    const sessionId = searchParams.get('session_id');
+    const success = searchParams.get('success');
+
+    if (success === 'true' && sessionId) {
+      handleStripePaymentSuccess(sessionId);
+    }
+  }, [searchParams]);
+
+  const handleStripePaymentSuccess = async (sessionId: string) => {
+    try {
+      // Fetch session details from Stripe to get metadata
+      const response = await fetch(`/api/stripe/session?session_id=${sessionId}`);
+      const session = await response.json();
+
+      if (session.metadata?.cardId && session.metadata?.amount) {
+        await topUpCard({
+          cardId: session.metadata.cardId as any,
+          amount: parseFloat(session.metadata.amount),
+        });
+        console.log('Card balance updated successfully');
+      }
+    } catch (error) {
+      console.error('Failed to update balance after payment:', error);
+    }
+  };
 
   const cleanCardNumber = recipientCardNumber.replace(/\s/g, '');
   const recipientCard = useQuery(api.users.getCardByNumber,
