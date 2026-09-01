@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?canceled=true`,
       metadata: {
         cardId: cardId,
-        amount: amount/2,
+        amount: amount,
       },
     });
 
