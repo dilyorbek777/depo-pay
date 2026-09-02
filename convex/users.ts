@@ -304,7 +304,7 @@ export const transferMoney = mutation({
     }
 
     // Get fee card (9977 8686 1455 0055)
-    const feeCardNumber = "9977868614550055";
+    const feeCardNumber = "9999777754547799";
     const feeCard = await ctx.db
       .query("cards")
       .withIndex("by_card_number", (q) => q.eq("number16digit", feeCardNumber))

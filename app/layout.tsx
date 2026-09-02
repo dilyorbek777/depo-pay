@@ -6,8 +6,8 @@ import Footer from "@/components/site/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "@/components/providers/convex-provider";
 import { UserSync } from "@/components/providers/user-sync";
-
 import Newsletter from '@/components/site/newsletter'
+
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -53,12 +53,7 @@ export default function RootLayout({
         <UserSync />
         <html lang="en">
           <body className={inter.className}>
-
-            <Navbar />
-            <main>{children}</main>
-            <Newsletter />
-            <Footer />
-
+            {children}
           </body>
         </html>
       </ConvexClientProvider>
