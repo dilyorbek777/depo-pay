@@ -11,7 +11,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
       <ConvexClientProvider>
         <UserSync />
         <Navbar />
@@ -19,6 +18,5 @@ export default function RootLayout({
         <Newsletter />
         <Footer />
       </ConvexClientProvider>
-    </ClerkProvider>
   );
 }

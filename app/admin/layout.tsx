@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs";
+
 import ConvexClientProvider from "@/components/providers/convex-provider";
 import { UserSync } from "@/components/providers/user-sync";
 
