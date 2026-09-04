@@ -104,7 +104,7 @@ export default function CardManagement() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
             Card Management
           </h2>
           <p className="text-sm text-slate-500 mt-1">
@@ -119,7 +119,7 @@ export default function CardManagement() {
         {/* Left 2 Columns: User's Cards Section */}
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-primary flex items-center gap-2">
               <CardIcon className="w-5 h-5 text-indigo-600" />
               Your Cards
             </h3>
@@ -133,7 +133,7 @@ export default function CardManagement() {
               <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <CardIcon className="w-6 h-6" />
               </div>
-              <h4 className="font-bold text-slate-800 text-base">No cards issued yet</h4>
+              <h4 className="font-bold text-primary text-base">No cards issued yet</h4>
               <p className="text-sm text-slate-500 mt-1 max-w-sm mx-auto">
                 Create your first digital payment card using the creation panel to get started.
               </p>
@@ -269,7 +269,7 @@ export default function CardManagement() {
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Add New Card</h3>
+              <h3 className="text-base font-bold text-primary">Add New Card</h3>
               <p className="text-xs text-slate-500">Configure parameters for your new card</p>
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function CardManagement() {
                   type="number"
                   value={newCard.balance}
                   onChange={(e) => setNewCard({ ...newCard, balance: parseFloat(e.target.value) || 0 })}
-                  className="w-full pl-8 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="w-full pl-8 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                   placeholder="0.00"
                 />
               </div>

@@ -91,12 +91,12 @@ export default function WhyUs() {
                       <Icon className={`w-6 h-6 ${feature.iconColor}`} />
                     </div>
                     <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shadow-sm">
-                      <ArrowUpRight className="w-4 h-4 text-gray-700" />
+                      <ArrowUpRight className="w-4 h-4 text-primary" />
                     </div>
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 z-10 relative">
+                  <h3 className="text-xl font-bold text-primary mb-2 z-10 relative">
                     {feature.title}
                   </h3>
                   <p className="text-sm text-gray-600 font-medium leading-relaxed z-10 relative">

@@ -168,7 +168,7 @@ export default function DashboardPageV2() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50/50 text-slate-900 pb-12">
+        <div className="min-h-screen bg-slate-50/50 text-primary pb-12">
 
             {/* ==================== NAVBAR ==================== */}
             <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
@@ -183,35 +183,35 @@ export default function DashboardPageV2() {
                     <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
                         <button
                             onClick={() => setActiveTab("cards")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "cards" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "cards" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
                                 }`}
                         >
                             <LayoutDashboard className="w-4 h-4" /> My Cards
                         </button>
                         <button
                             onClick={() => setActiveTab("transfer")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "transfer" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "transfer" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
                                 }`}
                         >
                             <ArrowLeftRight className="w-4 h-4" /> Transfer
                         </button>
                         <button
                             onClick={() => setActiveTab("history")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "history" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "history" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
                                 }`}
                         >
                             <History className="w-4 h-4" /> History
                         </button>
                         <button
                             onClick={() => setActiveTab("topup")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "topup" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "topup" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
                                 }`}
                         >
                             <PlusCircle className="w-4 h-4" /> Top-Up
                         </button>
                         <button
                             onClick={() => setActiveTab("profile")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "profile" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "profile" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
                                 }`}
                         >
                             <UserIcon className="w-4 h-4" /> Profile
@@ -287,7 +287,7 @@ export default function DashboardPageV2() {
                                 <Send className="w-6 h-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Transfer Money</h2>
+                                <h2 className="text-xl sm:text-2xl font-extrabold text-primary tracking-tight">Transfer Money</h2>
                                 <p className="text-xs sm:text-sm text-slate-500">Send funds instantly to any registered card holder.</p>
                             </div>
                         </div>
@@ -309,7 +309,7 @@ export default function DashboardPageV2() {
                                         id="card-select"
                                         value={selectedCardId}
                                         onChange={(e) => setSelectedCardId(e.target.value)}
-                                        className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer pr-10"
+                                        className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer pr-10"
                                         required
                                     >
                                         <option value="">Choose a card to send from</option>
@@ -339,7 +339,7 @@ export default function DashboardPageV2() {
                                         setRecipientCardNumber(value);
                                     }}
                                     maxLength={19}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-mono font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder:text-slate-400"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-mono font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder:text-slate-400"
                                     required
                                 />
 
@@ -372,7 +372,7 @@ export default function DashboardPageV2() {
                                         min="0.01"
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                        className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                                         required
                                     />
                                 </div>
@@ -406,7 +406,7 @@ export default function DashboardPageV2() {
                                 <History className="w-6 h-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Transaction History</h2>
+                                <h2 className="text-xl sm:text-2xl font-extrabold text-primary tracking-tight">Transaction History</h2>
                                 <p className="text-xs sm:text-sm text-slate-500">Track all your transfers and top-ups.</p>
                             </div>
                         </div>
@@ -458,13 +458,13 @@ export default function DashboardPageV2() {
                                                     <td className="py-4 px-4 font-mono text-slate-700 font-semibold text-xs">
                                                         {formattedCardNumber}
                                                     </td>
-                                                    <td className="py-4 px-4 text-right font-extrabold text-slate-900">
+                                                    <td className="py-4 px-4 text-right font-extrabold text-primary">
                                                         ${transfer.amount.toFixed(2)}
                                                     </td>
                                                     <td className="py-4 px-4 text-right text-slate-400 text-xs">
                                                         ${transfer.fee.toFixed(2)}
                                                     </td>
-                                                    <td className="py-4 px-4 text-right font-extrabold text-slate-900">
+                                                    <td className="py-4 px-4 text-right font-extrabold text-primary">
                                                         ${transfer.totalDeducted.toFixed(2)}
                                                     </td>
                                                 </tr>
@@ -485,7 +485,7 @@ export default function DashboardPageV2() {
                                 <PlusCircle className="w-6 h-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Top-up Balance</h2>
+                                <h2 className="text-xl sm:text-2xl font-extrabold text-primary tracking-tight">Top-up Balance</h2>
                                 <p className="text-xs sm:text-sm text-slate-500">Instantly add funds to your card using Stripe payment gateway.</p>
                             </div>
                         </div>
@@ -507,7 +507,7 @@ export default function DashboardPageV2() {
                                         id="topup-card-select"
                                         value={topUpCardId}
                                         onChange={(e) => setTopUpCardId(e.target.value)}
-                                        className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer pr-10"
+                                        className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer pr-10"
                                         required
                                     >
                                         <option value="">Choose target card</option>
@@ -537,7 +537,7 @@ export default function DashboardPageV2() {
                                         min="1.00"
                                         value={topUpAmount}
                                         onChange={(e) => setTopUpAmount(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                                        className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                                         required
                                     />
                                 </div>
@@ -638,7 +638,7 @@ export default function DashboardPageV2() {
                                     )}
                                     <div className="space-y-1">
                                         <div className="flex items-center gap-3 flex-wrap">
-                                            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                                            <h1 className="text-xl sm:text-2xl font-extrabold text-primary tracking-tight">
                                                 {user?.fullName || "User"}
                                             </h1>
                                             <span className="px-3 py-1 bg-indigo-50 border border-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider">
@@ -667,7 +667,7 @@ export default function DashboardPageV2() {
                                 </div>
                                 <div>
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Member Since</h3>
-                                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
+                                    <p className="text-xl sm:text-2xl font-extrabold text-primary mt-0.5">
                                         {userData?.registeredAt
                                             ? new Date(userData.registeredAt * 1000).toLocaleDateString()
                                             : "N/A"
@@ -682,7 +682,7 @@ export default function DashboardPageV2() {
                                 </div>
                                 <div>
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Cards</h3>
-                                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
+                                    <p className="text-xl sm:text-2xl font-extrabold text-primary mt-0.5">
                                         {userCards?.length || 0}
                                     </p>
                                 </div>
@@ -694,7 +694,7 @@ export default function DashboardPageV2() {
                                 </div>
                                 <div>
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Balance</h3>
-                                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
+                                    <p className="text-xl sm:text-2xl font-extrabold text-primary mt-0.5">
                                         ${userCards?.reduce((sum: number, card: any) => sum + card.balance, 0).toFixed(2) || "0.00"}
                                     </p>
                                 </div>
@@ -712,7 +712,7 @@ export default function DashboardPageV2() {
                         <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center border border-emerald-100 shadow-inner">
                             <CheckCircle2 className="w-8 h-8" />
                         </div>
-                        <DialogTitle className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                        <DialogTitle className="text-2xl font-extrabold text-primary tracking-tight">
                             Transfer Successful!
                         </DialogTitle>
                         <p className="text-xs sm:text-sm text-slate-500">
@@ -748,7 +748,7 @@ export default function DashboardPageV2() {
 
                                 <div className="flex justify-between items-center">
                                     <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Total Deducted</span>
-                                    <span className="font-extrabold text-slate-900 text-base">
+                                    <span className="font-extrabold text-primary text-base">
                                         ${transferDetails.totalDeducted.toFixed(2)}
                                     </span>
                                 </div>

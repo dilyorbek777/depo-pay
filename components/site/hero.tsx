@@ -81,7 +81,7 @@ function HeroSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/40 border border-white/60 backdrop-blur-md shadow-sm text-slate-800 text-sm font-semibold tracking-wide"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/40 border border-white/60 backdrop-blur-md shadow-sm text-primary text-sm font-semibold tracking-wide"
         >
           <Sparkles className="w-4 h-4 text-purple-700" />
           <span>Next-Gen Payment Experience</span>
@@ -92,7 +92,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.15] tracking-tight drop-shadow-sm"
+          className="text-5xl md:text-7xl font-extrabold text-primary leading-[1.15] tracking-tight drop-shadow-sm"
         >
           Ready To Launch Your <br className="hidden sm:inline" />
           Online <span className="text-white drop-shadow-[0_2px_10px_rgba(125,95,255,0.5)]">Payment</span> App
@@ -103,7 +103,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg md:text-2xl font-medium text-slate-800/90 max-w-2xl leading-relaxed"
+          className="text-lg md:text-2xl font-medium text-primary/90 max-w-2xl leading-relaxed"
         >
           A simple yet modern solution to showcase your application, streamline transactions, and scale fast.
         </motion.p>
@@ -118,7 +118,7 @@ function HeroSection() {
           <Button
             id="get-started"
             aria-label="Get Started"
-            className="group relative inline-flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-lg px-8 py-6 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+            className="group relative inline-flex items-center gap-3 bg-primary hover:bg-slate-800 text-white font-semibold text-lg px-8 py-6 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
           >
             <span>Get Started</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

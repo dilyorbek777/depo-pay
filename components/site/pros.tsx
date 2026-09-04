@@ -82,7 +82,7 @@ export default function Pros() {
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="flex flex-col items-center text-center gap-2"
               >
-                <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
+                <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight">
                   {crd.stat}
                 </h1>
                 <div className="py-1">

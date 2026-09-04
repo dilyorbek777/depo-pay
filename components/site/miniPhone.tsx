@@ -45,9 +45,9 @@ export default function WalletCardComponent() {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="w-6" /> {/* Spacer */}
-              <h2 className="text-base font-bold text-slate-800">My Wallets</h2>
+              <h2 className="text-base font-bold text-primary">My Wallets</h2>
               <button className="relative p-1.5 rounded-full hover:bg-slate-100 transition-colors">
-                <Bell className="w-5 h-5 text-slate-700" />
+                <Bell className="w-5 h-5 text-primary" />
                 <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-amber-500 rounded-full" />
               </button>
             </div>
@@ -61,17 +61,17 @@ export default function WalletCardComponent() {
                 <div className="absolute w-44 h-44 rounded-full border-[18px] border-amber-500 border-b-transparent border-l-transparent -rotate-[115deg]" />
                 
                 {/* Needle Indicator */}
-                <div className="absolute bottom-1 left-1/2 w-1 h-14 bg-indigo-600 rounded-full origin-bottom -translate-x-1/2 rotate-[25deg] shadow-md" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-600 rounded-full border-2 border-white" />
+                <div className="absolute bottom-1 left-1/2 w-1 h-14 bg-primary/80 rounded-full origin-bottom -translate-x-1/2 rotate-[25deg] shadow-md" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white" />
               </div>
 
               <p className="text-[11px] text-slate-400 font-medium mt-3">This Month Spends</p>
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">$2745.90</h1>
+              <h1 className="text-2xl font-black text-primary tracking-tight">$2745.90</h1>
             </div>
 
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-3 my-6">
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-lg shadow-indigo-200 transition-all">
+              <button className="bg-primary hover:bg-primary/80 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-lg shadow-primary/20 transition-all">
                 Add Balance
               </button>
               <button className="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-semibold text-xs py-3 px-4 rounded-xl transition-all">

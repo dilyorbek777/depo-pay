@@ -11,7 +11,7 @@ export default async function Articles() {
 
   if (!rawPosts || rawPosts.length === 0) {
     return (
-      <div className="w-full px-16 py-16 text-center text-slate-500 font-medium">
+      <div className="w-full max-w-[1440px] mx-auto px-6 py-24 text-center text-slate-500 font-medium bg-slate-50/50 rounded-3xl border border-dashed border-slate-200 my-8">
         No articles published yet.
       </div>
     );
@@ -23,70 +23,96 @@ export default async function Articles() {
     title: post.title,
     description: post.description,
     category: post.category,
-    img: post.imageUrl, // Map Convex imageUrl to your component's img field
+    img: post.imageUrl,
     type: post.type,
   })) as unknown as BlogsType[];
 
-  // Hero post (newest / primary featured post)
   const heroPost = data[0];
-
-  // Secondary articles (up to 3 posts following the hero)
   const secondaryPosts = data.slice(1, 4);
-
-  // Remaining articles for the News component
   const newsPosts = data.slice(4);
 
   return (
-    <div className="w-full px-16 py-16 max-lg:px-3">
-      <div className="flex max-xl:flex-col items-center justify-center gap-10">
+    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 py-12 sm:py-16">
+      {/* Featured Articles Hero Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Featured Hero Article */}
-        <div className="flex w-1/2 max-xl:w-2/3 max-md:w-full">
-          {heroPost && (
+        {/* Main Featured Article (Hero) */}
+        {heroPost && (
+          <div className="lg:col-span-7 w-full">
             <Link 
               aria-label="Read More" 
               href={`/blog/${heroPost.id}`} 
-              key={heroPost.id}
-              className="w-full"
+              className="group block w-full bg-slate-50/60 hover:bg-slate-100/60 border border-slate-200/80 rounded-3xl p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
             >
-              <div className="w-full flex flex-col items-center gap-5 hover:opacity-95 transition-opacity">
-                <CustomImage 
-                  img={heroPost.img} 
-                  title={heroPost.title} 
-                  nameclass="w-full rounded-2xl object-cover" 
-                />
-                <p className="text-[#7D5FFF] bg-[#E5DFF4] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
-                  {heroPost.category}
-                </p>
-                <p className="text-2xl text-center font-bold max-lg:text-sm line-clamp-2">
-                  {heroPost.title}
-                </p>
+              <div className="flex flex-col gap-6">
+                {/* Image Wrapper */}
+                <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-200">
+                  <CustomImage 
+                    img={heroPost.img} 
+                    title={heroPost.title} 
+                    nameclass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                  />
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-purple-700 border border-white/50 shadow-sm">
+                      {heroPost.category}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="flex flex-col gap-3 px-2">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary group-hover:text-purple-600 transition-colors line-clamp-2 leading-tight tracking-tight">
+                    {heroPost.title}
+                  </h2>
+                  {heroPost.description && (
+                    <p className="text-slate-600 line-clamp-3 text-sm sm:text-base leading-relaxed">
+                      {heroPost.description}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-2 pt-2 text-sm font-semibold text-purple-600 group-hover:translate-x-1 transition-transform">
+                    <span>Read Full Article</span>
+                    <span>→</span>
+                  </div>
+                </div>
               </div>
             </Link>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Secondary Articles Stack */}
-        <div className="flex w-1/2 max-xl:w-2/3 max-md:w-full flex-col items-center justify-center gap-8">
+        <div className="lg:col-span-5 w-full flex flex-col gap-6">
           {secondaryPosts.map((item) => (
             <Link 
               aria-label="Read More" 
               href={`/blog/${item.id}`} 
               key={item.id} 
-              className="w-full flex max-sm:flex-col justify-between items-center gap-5 group"
+              className="group block w-full bg-white hover:bg-slate-50/80 border border-slate-200/70 p-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
             >
-              <CustomImage 
-                nameclass="rounded-3xl max-lg:h-auto w-52 h-52 max-lg:w-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                img={item.img} 
-                title={item.title} 
-              />
-              <div className="flex flex-col items-center sm:items-start justify-between w-full gap-3">
-                <p className="text-[#7D5FFF] bg-[#E5DFF4] px-3 py-1 rounded-full text-xs font-bold">
-                  {item.category}
-                </p>
-                <p className="text-xl sm:text-2xl text-center sm:text-left font-bold max-lg:text-sm line-clamp-2">
-                  {item.title}
-                </p>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                {/* Thumbnail Image */}
+                <div className="relative w-full sm:w-40 shrink-0 aspect-[16/10] sm:aspect-square rounded-xl overflow-hidden bg-slate-100">
+                  <CustomImage 
+                    nameclass="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                    img={item.img} 
+                    title={item.title} 
+                  />
+                </div>
+
+                {/* Details */}
+                <div className="flex flex-col justify-between h-full gap-2 py-1">
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-purple-50 text-purple-700 border border-purple-100 mb-2">
+                      {item.category}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-primary group-hover:text-purple-600 transition-colors line-clamp-2 leading-snug">
+                      {item.title}
+                    </h3>
+                  </div>
+                  
+                  <div className="text-xs font-semibold text-slate-400 group-hover:text-slate-600 transition-colors">
+                    Read story →
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
@@ -94,8 +120,12 @@ export default async function Articles() {
 
       </div>
 
-      {/* News Component with remaining items */}
-      {newsPosts.length > 0 && <News data={newsPosts as unknown as BlogsType[]} />}
-    </div>
+      {/* News Component (Remaining Posts) */}
+      {newsPosts.length > 0 && (
+        <div className="mt-16 sm:mt-20 pt-12 border-t border-slate-100">
+          <News data={newsPosts as unknown as BlogsType[]} />
+        </div>
+      )}
+    </section>
   );
 }

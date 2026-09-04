@@ -57,7 +57,7 @@ export default function SignUpPage() {
         </ScrollAnimation>
         <ScrollAnimation direction="right" className="w-1/2 max-lg:w-2/3 max-md:w-full">
           <div className="bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center justify-center">
-            <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Get Started</h2>
+            <h2 className="text-3xl font-bold text-center mb-6 text-primary">Get Started</h2>
             <SignUp />
           </div>
         </ScrollAnimation>

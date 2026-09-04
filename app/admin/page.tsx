@@ -122,21 +122,21 @@ export default function AdminPanelPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 text-slate-900 pb-12">
+    <div className="min-h-screen bg-slate-50/50 text-primary pb-12">
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-200">
               <ShieldAlert className="w-5 h-5" />
             </div>
-            <span className="font-extrabold text-lg text-slate-900 tracking-tight">Admin Dashboard</span>
+            <span className="font-extrabold text-lg text-primary tracking-tight">Admin Dashboard</span>
           </div>
 
           <nav className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
             <button
               onClick={() => setActiveTab("posts")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeTab === "posts" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                activeTab === "posts" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
               }`}
             >
               <Newspaper className="w-4 h-4" /> Posts & News
@@ -144,7 +144,7 @@ export default function AdminPanelPage() {
             <button
               onClick={() => setActiveTab("subscribers")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeTab === "subscribers" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                activeTab === "subscribers" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-primary"
               }`}
             >
               <Mail className="w-4 h-4" /> Newsletter Subs
@@ -162,7 +162,7 @@ export default function AdminPanelPage() {
                   <PlusCircle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">Create Post</h2>
+                  <h2 className="text-xl font-extrabold text-primary tracking-tight">Create Post</h2>
                   <p className="text-xs text-slate-500">Publish blog articles or announcements.</p>
                 </div>
               </div>
@@ -229,7 +229,7 @@ export default function AdminPanelPage() {
                       id="post-category"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                       <option value="General">General</option>
                       <option value="Product Update">Product Update</option>
@@ -265,7 +265,7 @@ export default function AdminPanelPage() {
                     placeholder="Write details..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -288,7 +288,7 @@ export default function AdminPanelPage() {
                     <Newspaper className="w-6 h-6" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">Published Content</h2>
+                    <h2 className="text-xl font-extrabold text-primary tracking-tight">Published Content</h2>
                     <p className="text-xs text-slate-500">Manage live news items and blog posts.</p>
                   </div>
                 </div>
@@ -336,7 +336,7 @@ export default function AdminPanelPage() {
                               <Tag className="w-3 h-3" /> {post.category}
                             </span>
                           </div>
-                          <h3 className="font-extrabold text-sm text-slate-900 line-clamp-1">{post.title}</h3>
+                          <h3 className="font-extrabold text-sm text-primary line-clamp-1">{post.title}</h3>
                           <p className="text-xs text-slate-500 line-clamp-2">{post.description}</p>
                           <p className="text-[10px] font-mono text-slate-400 pt-1">ID: {post.id}</p>
                         </div>
@@ -365,7 +365,7 @@ export default function AdminPanelPage() {
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">Newsletter Subscribers</h2>
+                  <h2 className="text-xl font-extrabold text-primary tracking-tight">Newsletter Subscribers</h2>
                   <p className="text-xs text-slate-500">View registered email subscriptions.</p>
                 </div>
               </div>
@@ -409,7 +409,7 @@ export default function AdminPanelPage() {
                   <tbody className="divide-y divide-slate-100 text-sm font-medium">
                     {filteredSubscribers.map((sub) => (
                       <tr key={sub._id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-slate-900 text-xs">{sub.email}</td>
+                        <td className="py-3.5 px-4 font-bold text-primary text-xs">{sub.email}</td>
                         <td className="py-3.5 px-4 text-slate-500 text-xs">
                           {new Date(sub.subscribedAt).toLocaleString()}
                         </td>

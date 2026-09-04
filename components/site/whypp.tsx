@@ -172,7 +172,7 @@ export default function Whypp() {
                             {(card.title || card.description) && (
                                 <div className="flex flex-col gap-2 flex-grow justify-center">
                                     {card.title && (
-                                        <h2 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+                                        <h2 className="text-xl font-bold text-primary group-hover:text-primary transition-colors">
                                             {card.title}
                                         </h2>
                                     )}

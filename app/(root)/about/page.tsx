@@ -52,7 +52,7 @@ export default function AboutPage() {
             <span>Our Mission</span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-primary leading-tight tracking-tight">
             Empowering the Next Generation of Financial Tech
           </h2>
 
@@ -78,7 +78,7 @@ export default function AboutPage() {
 
           <div className="flex flex-col gap-6 text-slate-800">
             <Award className="w-12 h-12 text-purple-700" />
-            <h3 className="text-2xl font-bold text-slate-900">Built for Trust & Transparency</h3>
+            <h3 className="text-2xl font-bold text-primary">Built for Trust & Transparency</h3>
             <p className="text-slate-700 leading-relaxed">
               Our infrastructure is crafted from the ground up to guarantee real-time clarity over every transaction. Built for scaling teams and individual creators alike.
             </p>
@@ -87,7 +87,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. Stats Banner Section */}
-      <section className="max-w-[1440px] mx-auto w-full bg-slate-900 text-white rounded-3xl py-12 px-8 shadow-xl">
+      <section className="max-w-[1440px] mx-auto w-full bg-primary text-white rounded-3xl py-12 px-8 shadow-xl">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, idx) => (
             <motion.div
@@ -112,7 +112,7 @@ export default function AboutPage() {
       {/* 4. Core Values Grid */}
       <section className="max-w-[1440px] mx-auto w-full py-10 flex flex-col gap-12">
         <div className="text-center flex flex-col gap-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-primary">
             Why Choose Our Platform
           </h2>
           <p className="text-slate-600 max-w-xl mx-auto">
@@ -133,7 +133,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm">
                 {item.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+              <h3 className="text-xl font-bold text-primary">{item.title}</h3>
               <p className="text-slate-600 leading-relaxed text-sm">
                 {item.description}
               </p>

@@ -11,13 +11,13 @@ export default function Footer() {
 
   const socialLinks = [
     { label: 'Facebook', href: '#', icon: Facebook },
-    { label: 'Instagram', href: '#', icon: Instagram },
+    { label: 'Instagram', href: 'https://www.instagram.com/asfandiyoroff/', icon: Instagram },
     { label: 'Twitter', href: '#', icon: Twitter },
     { label: 'LinkedIn', href: '#', icon: Linkedin },
   ]
 
   return (
-    <footer className="w-full bg-gradient-to-b from-gray-50 to-gray-100 border-t border-gray-200/80 text-gray-700">
+    <footer className="w-full bg-gradient-to-b from-gray-50 to-gray-100 border-t border-gray-200/80 text-primary">
       <div className="max-w-[1440px] mx-auto px-7 py-10">
         <div className="flex items-center justify-between max-sm:flex-col gap-6">
           {/* Left: Brand & Copyright */}
@@ -36,23 +36,23 @@ export default function Footer() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-extrabold text-gray-900 tracking-tight">
+              <span className="text-xl font-extrabold text-primary tracking-tight">
                 PrimePay
               </span>
             </Link>
 
             <div className="hidden sm:block w-px h-6 bg-gray-300" />
 
-            <p className="text-sm font-medium text-gray-500">
+            <p className="text-sm font-medium text-primary">
               © {currentYear} DEPO —{' '}
               <Link
                 aria-label="Telegram"
-                href="https://t.me/leader_developer"
+                href="https://t.me/AsfandiyorovD"
                 rel="noopener noreferrer"
                 target="_blank"
                 className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-semibold transition-colors group"
               >
-                <span>@leader_developer</span>
+                <span>Asfandiyorov Dilyorbek</span>
                 <Send className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </p>

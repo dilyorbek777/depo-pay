@@ -39,7 +39,7 @@ export default function Navbar() {
             <Link
               key={link.title}
               href={link.href}
-              className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors py-1 relative group"
+              className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors py-1 relative group"
             >
               {link.title}
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
@@ -48,7 +48,7 @@ export default function Navbar() {
           <SignedIn>
             <Link
               href="/dashboard"
-              className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors py-1 relative group"
+              className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors py-1 relative group"
             >
               Dashboard
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
@@ -62,14 +62,14 @@ export default function Navbar() {
             <SignInButton mode="modal">
               <Button 
                 variant="ghost" 
-                className="font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100/80 rounded-xl px-4 xl:px-5"
+                className="font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 rounded-xl px-4 xl:px-5"
               >
                 Login
               </Button>
             </SignInButton>
             <SignUpButton mode="modal">
               <Button 
-                className="bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl px-4 xl:px-5 shadow-sm hover:shadow transition-all"
+                className="bg-primary hover:bg-slate-800 text-white font-semibold rounded-xl px-4 xl:px-5 shadow-sm hover:shadow transition-all"
               >
                 Sign Up
               </Button>
@@ -78,7 +78,7 @@ export default function Navbar() {
 
           <SignedIn>
             <Link href="/dashboard">
-              <Button className="bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl px-4 xl:px-5 gap-2 shadow-sm">
+              <Button className="bg-primary hover:bg-slate-800 text-white font-semibold rounded-xl px-4 xl:px-5 gap-2 shadow-sm">
                 <span>Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
@@ -151,7 +151,7 @@ export default function Navbar() {
                 </SignInButton>
                 <SignUpButton mode="modal">
                   <Button 
-                    className="w-full h-11 sm:h-12 text-base font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-2xl shadow-md"
+                    className="w-full h-11 sm:h-12 text-base font-semibold bg-primary hover:bg-slate-800 text-white rounded-2xl shadow-md"
                   >
                     Sign Up
                   </Button>
@@ -164,7 +164,7 @@ export default function Navbar() {
                   <UserButton afterSignOutUrl="/" />
                 </div>
                 <Link href="/dashboard" onClick={() => setToggle(false)}>
-                  <Button className="w-full h-11 sm:h-12 text-base font-semibold bg-slate-900 text-white rounded-2xl gap-2 shadow-md">
+                  <Button className="w-full h-11 sm:h-12 text-base font-semibold bg-primary text-white rounded-2xl gap-2 shadow-md">
                     <span>Go to Dashboard</span>
                     <ArrowRight className="w-4 h-4" />
                   </Button>

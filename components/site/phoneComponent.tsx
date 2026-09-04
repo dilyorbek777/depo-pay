@@ -31,7 +31,7 @@ export default function PhoneComponent() {
               <div className="w-10 h-10 rounded-xl bg-slate-200" />
               <div>
                 <p className="text-xs text-indigo-600 font-semibold">Hi, John!</p>
-                <h2 className="text-sm font-bold text-slate-900">Welcome Back</h2>
+                <h2 className="text-sm font-bold text-primary">Welcome Back</h2>
               </div>
             </div>
             <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
@@ -44,7 +44,7 @@ export default function PhoneComponent() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-xs text-slate-500 font-medium">Account Balance</p>
-              <h1 className="text-xl font-black text-slate-900">$5345.90</h1>
+              <h1 className="text-xl font-black text-primary">$5345.90</h1>
             </div>
             <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-md shadow-indigo-200 transition-all">
               Add Card
@@ -116,7 +116,7 @@ export default function PhoneComponent() {
           {/* History Section */}
           <div>
             <div className="flex justify-between items-center mb-3">
-              <h3 className="font-bold text-slate-900 text-sm">History</h3>
+              <h3 className="font-bold text-primary text-sm">History</h3>
               <button className="text-xs text-indigo-600 font-semibold flex items-center hover:underline">
                 See All <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
               </button>
@@ -133,7 +133,7 @@ export default function PhoneComponent() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs font-bold text-slate-900">$56</p>
+                <p className="text-xs font-bold text-primary">$56</p>
                 <p className="text-[10px] text-slate-400 font-medium">Debited</p>
               </div>
             </div>

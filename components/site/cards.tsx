@@ -59,7 +59,7 @@ export default function Cards() {
 
             {/* Text Content */}
             <div className="flex flex-col items-center text-center gap-3 mt-2">
-              <h3 className="text-2xl font-bold text-slate-900 tracking-tight group-hover:text-[#7D5FFF] transition-colors duration-200">
+              <h3 className="text-2xl font-bold text-primary tracking-tight group-hover:text-[#7D5FFF] transition-colors duration-200">
                 {card.title}
               </h3>
               <p className="text-slate-600 text-sm md:text-base leading-relaxed font-normal">

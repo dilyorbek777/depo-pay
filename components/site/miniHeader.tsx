@@ -49,7 +49,7 @@ export default function MiniHeader({ ttext }: { ttext: string }) {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="z-10 text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight text-center leading-tight drop-shadow-sm capitalize"
+        className="z-10 text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary tracking-tight text-center leading-tight drop-shadow-sm capitalize"
       >
         {ttext}
       </motion.h1>
