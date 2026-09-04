@@ -55,7 +55,7 @@ export default function Debit() {
     }
 
     return (
-        <div className="w-full h-full bg-[#181818] px-7 py-20">
+        <div className="w-full h-full overflow-x-hidden bg-[#181818] px-7 py-20">
             <div className="max-w-[1440px] mx-auto flex justify-between gap-20 max-lg:flex-col items-center">
                 {/* Left Section: Content & Options */}
                 <ScrollAnimation direction="left" className="w-1/2 max-lg:w-2/3 max-md:w-full">
