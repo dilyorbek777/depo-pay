@@ -160,7 +160,7 @@ export default function DashboardPageV2() {
         return (
             <div className="flex items-center justify-center min-h-screen bg-slate-50">
                 <div className="flex items-center gap-3 text-slate-500 font-medium">
-                    <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     Loading dashboard data...
                 </div>
             </div>
@@ -183,35 +183,35 @@ export default function DashboardPageV2() {
                     <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
                         <button
                             onClick={() => setActiveTab("cards")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "cards" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "cards" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-slate-900"
                                 }`}
                         >
                             <LayoutDashboard className="w-4 h-4" /> My Cards
                         </button>
                         <button
                             onClick={() => setActiveTab("transfer")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "transfer" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "transfer" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-slate-900"
                                 }`}
                         >
                             <ArrowLeftRight className="w-4 h-4" /> Transfer
                         </button>
                         <button
                             onClick={() => setActiveTab("history")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "history" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "history" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-slate-900"
                                 }`}
                         >
                             <History className="w-4 h-4" /> History
                         </button>
                         <button
                             onClick={() => setActiveTab("topup")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "topup" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "topup" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-slate-900"
                                 }`}
                         >
                             <PlusCircle className="w-4 h-4" /> Top-Up
                         </button>
                         <button
                             onClick={() => setActiveTab("profile")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "profile" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "profile" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-slate-900"
                                 }`}
                         >
                             <UserIcon className="w-4 h-4" /> Profile
@@ -233,35 +233,35 @@ export default function DashboardPageV2() {
                 <div className="md:hidden flex items-center justify-around border-t border-slate-200/60 bg-white py-2 px-2">
                     <button
                         onClick={() => setActiveTab("cards")}
-                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "cards" ? "text-indigo-600" : "text-slate-500"
+                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "cards" ? "text-primary" : "text-slate-500"
                             }`}
                     >
                         <LayoutDashboard className="w-5 h-5" /> Cards
                     </button>
                     <button
                         onClick={() => setActiveTab("transfer")}
-                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "transfer" ? "text-indigo-600" : "text-slate-500"
+                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "transfer" ? "text-primary" : "text-slate-500"
                             }`}
                     >
                         <ArrowLeftRight className="w-5 h-5" /> Transfer
                     </button>
                     <button
                         onClick={() => setActiveTab("history")}
-                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "history" ? "text-indigo-600" : "text-slate-500"
+                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "history" ? "text-primary" : "text-slate-500"
                             }`}
                     >
                         <History className="w-5 h-5" /> History
                     </button>
                     <button
                         onClick={() => setActiveTab("topup")}
-                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "topup" ? "text-indigo-600" : "text-slate-500"
+                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "topup" ? "text-primary" : "text-slate-500"
                             }`}
                     >
                         <PlusCircle className="w-5 h-5" /> Top-Up
                     </button>
                     <button
                         onClick={() => setActiveTab("profile")}
-                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "profile" ? "text-indigo-600" : "text-slate-500"
+                        className={`flex flex-col items-center gap-1 text-[10px] font-bold ${activeTab === "profile" ? "text-primary" : "text-slate-500"
                             }`}
                     >
                         <UserIcon className="w-5 h-5" /> Profile
@@ -283,7 +283,7 @@ export default function DashboardPageV2() {
                 {activeTab === "transfer" && (
                     <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 transition-all max-w-2xl mx-auto">
                         <div className="flex items-center gap-3 border-b border-slate-100 pb-5 mb-6">
-                            <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                            <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
                                 <Send className="w-6 h-6" />
                             </div>
                             <div>
@@ -389,7 +389,7 @@ export default function DashboardPageV2() {
 
                             <button
                                 type="submit"
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 active:scale-[0.99] mt-2"
+                                className="w-full bg-primary hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 active:scale-[0.99] mt-2"
                             >
                                 <Send className="w-4 h-4" />
                                 <span>Confirm & Transfer Money</span>
@@ -402,7 +402,7 @@ export default function DashboardPageV2() {
                 {activeTab === "history" && (
                     <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 transition-all max-w-5xl mx-auto">
                         <div className="flex items-center gap-3 border-b border-slate-100 pb-5 mb-6">
-                            <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                            <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
                                 <History className="w-6 h-6" />
                             </div>
                             <div>
@@ -634,7 +634,7 @@ export default function DashboardPageV2() {
                                             <span className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full" />
                                         </div>
                                     ) : (
-                                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xl sm:text-2xl shadow-inner">
+                                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-primary font-bold text-xl sm:text-2xl shadow-inner">
                                             {user?.fullName?.charAt(0) || "U"}
                                         </div>
                                     )}
@@ -643,7 +643,7 @@ export default function DashboardPageV2() {
                                             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                                                 {user?.fullName || "User"}
                                             </h1>
-                                            <span className="px-3 py-1 bg-indigo-50 border border-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider">
+                                            <span className="px-3 py-1 bg-indigo-50 border border-indigo-100 text-primary rounded-full text-xs font-bold uppercase tracking-wider">
                                                 {userData?.role || "user"}
                                             </span>
                                         </div>
@@ -664,7 +664,7 @@ export default function DashboardPageV2() {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 flex items-center gap-4 hover:border-slate-300 transition-all">
-                                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                                <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
                                     <Calendar className="w-6 h-6" />
                                 </div>
                                 <div>
@@ -679,7 +679,7 @@ export default function DashboardPageV2() {
                             </div>
 
                             <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 flex items-center gap-4 hover:border-slate-300 transition-all">
-                                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                                <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
                                     <CreditCard className="w-6 h-6" />
                                 </div>
                                 <div>
@@ -768,7 +768,7 @@ export default function DashboardPageV2() {
                     <DialogFooter className="mt-4">
                         <button
                             onClick={() => setShowSuccessModal(false)}
-                            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.99]"
+                            className="w-full bg-primary hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.99]"
                         >
                             Done
                         </button>
