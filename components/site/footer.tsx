@@ -1,101 +1,86 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+'use client'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Facebook, Instagram, Twitter, Linkedin, Send } from 'lucide-react'
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  const socialLinks = [
+    { label: 'Facebook', href: '#', icon: Facebook },
+    { label: 'Instagram', href: '#', icon: Instagram },
+    { label: 'Twitter', href: '#', icon: Twitter },
+    { label: 'LinkedIn', href: '#', icon: Linkedin },
+  ]
+
   return (
-    <footer className="text-gray-600 body-font pt-20">
-      <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-        <Link
-          aria-label={"Home Page"}
-          href={"/"}
-          className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
-        >
-          <Image src="/favicon.png" alt="Home Page" width={40} height={40} />
-          <span className="ml-3 text-xl">PrimePay</span>
-        </Link>
-        <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-          © 2024 DEPO —
-          <Link
-            aria-label={"Telegram"}
-            href="https://t.me/leader_developer"
-            className="text-gray-600 ml-1"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            @leader_developer
-          </Link>
-        </p>
-        <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-          <Link aria-label={"Facebook"} href={"#"} className="text-gray-500">
-            <svg
-              fill="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
+    <footer className="w-full bg-gradient-to-b from-gray-50 to-gray-100 border-t border-gray-200/80 text-gray-700">
+      <div className="max-w-[1440px] mx-auto px-7 py-10">
+        <div className="flex items-center justify-between max-sm:flex-col gap-6">
+          {/* Left: Brand & Copyright */}
+          <div className="flex items-center gap-4 max-sm:flex-col max-sm:text-center">
+            <Link
+              aria-label="Home Page"
+              href="/"
+              className="flex items-center gap-3 transition-transform hover:scale-105"
             >
-              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-            </svg>
-          </Link>
-          <Link
-            aria-label={"Instagram"}
-            href={"#"}
-            className="ml-3 text-gray-500"
-          >
-            <svg
-              fill="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-            </svg>
-          </Link>
-          <Link
-            aria-label={"Twitter"}
-            href={"#"}
-            className="ml-3 text-gray-500"
-          >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-            </svg>
-          </Link>
-          <Link
-            aria-label={"LinkedIn"}
-            href={"#"}
-            className="ml-3 text-gray-500"
-          >
-            <svg
-              fill="currentColor"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="0"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="none"
-                d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
-              ></path>
-              <circle cx="4" cy="4" r="2" stroke="none"></circle>
-            </svg>
-          </Link>
-        </span>
+              <div className="w-10 h-10 rounded-xl bg-white p-1.5 shadow-sm border border-gray-200/80 flex items-center justify-center">
+                <Image
+                  src="/favicon.png"
+                  alt="PrimePay Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-xl font-extrabold text-gray-900 tracking-tight">
+                PrimePay
+              </span>
+            </Link>
+
+            <div className="hidden sm:block w-px h-6 bg-gray-300" />
+
+            <p className="text-sm font-medium text-gray-500">
+              © {currentYear} DEPO —{' '}
+              <Link
+                aria-label="Telegram"
+                href="https://t.me/leader_developer"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-semibold transition-colors group"
+              >
+                <span>@leader_developer</span>
+                <Send className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </p>
+          </div>
+
+          {/* Right: Social Icon Bar */}
+          <div className="flex items-center gap-2">
+            {socialLinks.map((social) => {
+              const Icon = social.icon
+              return (
+                <motion.div
+                  key={social.label}
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    aria-label={social.label}
+                    href={social.href}
+                    className="w-10 h-10 rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary/40 hover:shadow-md transition-all duration-200"
+                  >
+                    <Icon className="w-4 h-4 stroke-[2]" />
+                  </Link>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     </footer>
-  );
+  )
 }
