@@ -13,6 +13,7 @@ import {
     Calendar,
     CheckCircle2,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function BoughtItemsPage() {
     const router = useRouter();
@@ -70,7 +71,7 @@ export default function BoughtItemsPage() {
                         <PackageCheck className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                         <h3 className="text-lg font-extrabold text-foreground mb-1">No purchases found</h3>
                         <p className="text-muted-foreground text-xs font-medium mb-6">
-                            You haven't purchased any items from the marketplace yet.
+                            You haven&apos;t purchased any items from the marketplace yet.
                         </p>
                         <button
                             onClick={() => router.push("/items")}
@@ -88,7 +89,9 @@ export default function BoughtItemsPage() {
                             >
                                 <div>
                                     <div className="relative aspect-[16/9] bg-muted overflow-hidden">
-                                        <img
+                                        <Image
+                                            width={500}
+                                            height={500}
                                             src={item.imageUrl}
                                             alt={item.name}
                                             className="w-full h-full object-cover"

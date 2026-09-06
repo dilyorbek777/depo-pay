@@ -22,6 +22,7 @@ import {
   PackageCheck,
   CheckCircle2,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function ItemDetailsPage() {
   const params = useParams();
@@ -133,7 +134,9 @@ export default function ItemDetailsPage() {
           {/* Media Preview */}
           <div className="space-y-4">
             <div className="relative aspect-square rounded-2xl bg-muted overflow-hidden border border-border">
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={product.imageUrl}
                 alt={product.name}
                 className="w-full h-full object-cover"

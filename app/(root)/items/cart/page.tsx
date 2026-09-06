@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function CartPage() {
   const router = useRouter();
@@ -155,7 +156,7 @@ export default function CartPage() {
             <ShoppingBag className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
             <h3 className="text-lg font-extrabold text-foreground mb-1">Your cart is empty</h3>
             <p className="text-muted-foreground text-xs font-medium mb-6">
-              Looks like you haven't added any digital items to your cart yet.
+              Looks like you haven&apos;t added any digital items to your cart yet.
             </p>
             <button
               onClick={() => router.push("/items")}
@@ -187,7 +188,9 @@ export default function CartPage() {
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-2xl overflow-hidden shrink-0 border border-border">
-                      <img
+                      <Image
+                        width={500}
+                        height={500}
                         src={item.imageUrl}
                         alt={item.name}
                         className="w-full h-full object-cover"

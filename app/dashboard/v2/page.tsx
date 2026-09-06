@@ -625,7 +625,9 @@ export default function DashboardPageV2() {
                                 <div className="flex items-center gap-5">
                                     {user?.imageUrl ? (
                                         <div className="relative group">
-                                            <img
+                                            <Image
+                                                width={80}
+                                                height={80}
                                                 src={user.imageUrl}
                                                 alt="Profile"
                                                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-indigo-50 shadow-md transition-transform group-hover:scale-105"
