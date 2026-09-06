@@ -346,6 +346,8 @@ export const transferMoney = mutation({
       newRecipientBalance: recipientCard.balance + args.amount,
       fee: fee,
       totalDeducted: totalDeducted,
+      holderName: recipientCard.holderName,
+      receiverCardNumber: recipientCard.number16digit,
     };
   },
 });

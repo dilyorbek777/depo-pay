@@ -22,15 +22,42 @@ export default defineSchema({
     description: v.string(),
     category: v.string(),
     imageUrl: v.string(),
-    type: v.union(v.literal("news"), v.literal("blog")),
+    type: v.string(), // "news" or "blog"
     createdAt: v.number(),
-  }),
+  }).index("by_post_id", ["id"]),
 
-  subscribers: defineTable({
+  products: defineTable({
+    id: v.string(),
+    name: v.string(),
+    price: v.number(),
+    category: v.string(),
+    imageUrl: v.string(),
+    description: v.string(),
+    quantity: v.number(),
+    createdAt: v.number(),
+  }).index("by_product_id", ["id"]),
+
+  orders: defineTable({
+    userId: v.optional(v.string()), // <--- Changed to optional
+    stripeSessionId: v.string(),
+    items: v.array(
+      v.object({
+        productId: v.string(),
+        name: v.string(),
+        price: v.number(),
+        quantity: v.number(),
+      })
+    ),
+    totalAmount: v.number(),
+    status: v.union(v.literal("pending"), v.literal("paid"), v.literal("failed")),
+  })
+    .index("by_stripe_session_id", ["stripeSessionId"])
+    .index("by_user_id", ["userId"]),
+  newsletter: defineTable({
     email: v.string(),
     subscribedAt: v.number(),
-    status: v.optional(v.string()),
-  }),
+    status: v.optional(v.string()), // "active" or "unsubscribed"
+  }).index("by_email", ["email"]),
 
   cards: defineTable({
     // Card details

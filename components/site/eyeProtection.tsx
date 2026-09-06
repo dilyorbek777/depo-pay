@@ -203,7 +203,7 @@ export default function EyeProtection() {
         >
           Feels great in low-light Mode <br />
           for your{' '}
-          <span className="bg-gradient-to-r from-amber-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-amber-500 via-purple-600 to-primary bg-clip-text text-transparent">
             Eye Protection
           </span>
         </motion.h1>

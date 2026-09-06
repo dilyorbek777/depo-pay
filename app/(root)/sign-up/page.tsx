@@ -7,11 +7,11 @@ import ScrollAnimation from '@/components/ui/scroll-animation'
 import { motion } from 'framer-motion'
 
 const signUpFeatures = [
-    'Secure Account Creation',
-    'Instant Dashboard Access',
-    'Add Multiple Cards',
-    'Track All Transactions',
-    '24/7 Customer Support',
+  'Secure Account Creation',
+  'Instant Dashboard Access',
+  'Add Multiple Cards',
+  'Track All Transactions',
+  '24/7 Customer Support',
 ]
 
 export default function SignUpPage() {
@@ -19,7 +19,7 @@ export default function SignUpPage() {
     <div className="w-full h-full bg-[#303030] px-7 min-h-screen">
       <div className='max-w-[1440px] mx-auto py-20 flex justify-between gap-20 max-lg:flex-col items-center min-h-screen'>
         <ScrollAnimation direction="left" className="w-1/2 max-lg:w-2/3 max-md:w-full">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -28,7 +28,7 @@ export default function SignUpPage() {
           >
             Create Your <br /> <span className='text-white'>PrimePay Account</span>
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -39,8 +39,8 @@ export default function SignUpPage() {
           </motion.p>
           <div className="grid grid-cols-2 gap-5 mt-10 max-sm:grid-cols-1">
             {signUpFeatures.map((feature, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -56,7 +56,8 @@ export default function SignUpPage() {
           </div>
         </ScrollAnimation>
         <ScrollAnimation direction="right" className="w-1/2 max-lg:w-2/3 max-md:w-full">
-          <div className="bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center justify-center">
+          <div className="rounded-3xl p-8 shadow-xl shadow-slate-900/50 border border-[#FFB545]/20 flex flex-col items-center justify-center">
+
             <h2 className="text-3xl font-bold text-center mb-6 text-primary">Get Started</h2>
             <SignUp />
           </div>

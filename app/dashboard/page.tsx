@@ -9,6 +9,7 @@ import CardManagement from "@/components/dashboard/card-management";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { useUserId } from "@/lib/useUserId";
 import {
     CreditCard,
     Send,
@@ -25,6 +26,7 @@ import {
     Calendar,
     Wallet,
     LogOut,
+    ShoppingBag,
 } from "lucide-react";
 
 import Image from "next/image";
@@ -33,6 +35,7 @@ export default function DashboardPageV2() {
     const { userId } = useAuth();
     const { user } = useUser();
     const searchParams = useSearchParams();
+    const localStorageUserId = useUserId();
 
     // Queries
     const userData = useQuery(
@@ -46,6 +49,10 @@ export default function DashboardPageV2() {
     const transferHistory = useQuery(
         api.users.getTransferHistory,
         userId ? { user_id: userId } : "skip"
+    );
+    const purchasedItems = useQuery(
+        api.orders.getPurchasedItems,
+        localStorageUserId ? { userId: localStorageUserId } : "skip"
     );
 
     // Tab State Management
@@ -142,7 +149,7 @@ export default function DashboardPageV2() {
                 amount: transferAmount,
             });
             console.log(result);
-            
+
             setTransferDetails(result);
             setShowSuccessModal(true);
             setRecipientCardNumber("");
@@ -816,6 +823,56 @@ export default function DashboardPageV2() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Purchased Items Section */}
+                        {purchasedItems && purchasedItems.length > 0 && (
+                            <div className="bg-card text-card-foreground rounded-3xl border border-border/80 shadow-sm p-6">
+                                <h2 className="text-lg font-extrabold text-foreground mb-4 flex items-center gap-2">
+                                    <ShoppingBag className="w-5 h-5 text-primary" />
+                                    Purchased Items
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {purchasedItems.map((item: any) => (
+                                        <div
+                                            key={item._id}
+                                            className="bg-muted/40 border border-border/80 rounded-2xl p-4 hover:border-border/100 transition-all"
+                                        >
+                                            {item.imageUrl && (
+                                                <div className="relative w-full h-32 mb-3 rounded-xl overflow-hidden bg-muted">
+                                                    <img
+                                                        src={item.imageUrl}
+                                                        alt={item.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            )}
+                                            <h3 className="font-bold text-foreground text-sm mb-1 truncate">
+                                                {item.name}
+                                            </h3>
+                                            <p className="text-xs text-muted-foreground mb-2">
+                                                ${item.price?.toFixed(2) || "0.00"}
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                Purchased:{" "}
+                                                {item.purchasedAt
+                                                    ? new Date(item.purchasedAt * 1000).toLocaleDateString()
+                                                    : "N/A"}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {purchasedItems && purchasedItems.length === 0 && (
+                            <div className="bg-card text-card-foreground rounded-3xl border border-border/80 shadow-sm p-8 text-center">
+                                <ShoppingBag className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                                <h3 className="font-bold text-foreground mb-1">No Purchased Items</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    You haven't purchased any items yet.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 )}
 

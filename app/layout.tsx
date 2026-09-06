@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "@/components/providers/convex-provider";
 import { UserSync } from "@/components/providers/user-sync";
 import Newsletter from '@/components/site/newsletter'
+import { CartProvider } from "@/context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,7 +54,9 @@ export default function RootLayout({
         <UserSync />
         <html lang="en">
           <body className={inter.className}>
-            {children}
+            <CartProvider>
+              {children}
+            </CartProvider>
           </body>
         </html>
       </ConvexClientProvider>

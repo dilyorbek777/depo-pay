@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { api } from "../../convex/_generated/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,12 +24,22 @@ import {
 } from "lucide-react";
 
 export default function AdminPanelPage() {
+  const { userId } = useAuth();
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"posts" | "subscribers">("posts");
+
+  const userData = useQuery(api.users.getUserByClerkId, userId ? { user_id: userId } : "skip");
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.role !== "admin") {
+      router.push("/dashboard");
+    }
+  }, [userData, router]);
 
   // Form State
   const [postType, setPostType] = useState<"news" | "blog">("news");
@@ -110,15 +122,19 @@ export default function AdminPanelPage() {
     a.click();
   };
 
-  if (!isMounted) {
+  if (!isMounted || !userData) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="flex items-center gap-3 text-slate-500 font-medium">
-          <Loader2 className="w-5 h-5 animate-spin text-primary" />
+          <Loader2 className="w-5 h-5 animate-spin text-indigo-600" />
           Loading Admin Panel...
         </div>
       </div>
     );
+  }
+
+  if (userData.role !== "admin") {
+    return null; // Will be redirected by useEffect
   }
 
   return (

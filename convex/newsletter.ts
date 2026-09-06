@@ -1,20 +1,30 @@
-import { mutation, query } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
-// Subscribe a user email to the newsletter
-export const subscribeEmail = mutation({
-  args: { email: v.string() },
+export const getSubscribers = query({
+  handler: async (ctx) => {
+    return await ctx.db.query("newsletter").order("desc").collect();
+  },
+});
+
+export const subscribe = mutation({
+  args: {
+    email: v.string(),
+  },
   handler: async (ctx, args) => {
     const existing = await ctx.db
-      .query("subscribers")
-      .filter((q) => q.eq(q.field("email"), args.email))
+      .query("newsletter")
+      .withIndex("by_email", (q) => q.eq("email", args.email))
       .first();
 
     if (existing) {
-      throw new Error("This email is already subscribed!");
+      if (existing.status === "unsubscribed") {
+        await ctx.db.patch(existing._id, { status: "active" });
+      }
+      return existing._id;
     }
 
-    return await ctx.db.insert("subscribers", {
+    return await ctx.db.insert("newsletter", {
       email: args.email,
       subscribedAt: Date.now(),
       status: "active",
@@ -22,9 +32,16 @@ export const subscribeEmail = mutation({
   },
 });
 
-// Fetch all subscribers for the admin panel
-export const getSubscribers = query({
-  handler: async (ctx) => {
-    return await ctx.db.query("subscribers").order("desc").collect();
+export const updateSubscriber = mutation({
+  args: {
+    id: v.id("newsletter"),
+    email: v.string(),
+    status: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, {
+      email: args.email,
+      status: args.status,
+    });
   },
 });

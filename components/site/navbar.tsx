@@ -13,6 +13,7 @@ const links = [
   { title: "Blog", href: "/blog" },
   { title: "Why us", href: "/whyus" },
   { title: "Pricing", href: "/pricing" },
+  { title: "Items", href: "/items" },
 ]
 
 export default function Navbar() {
@@ -23,12 +24,12 @@ export default function Navbar() {
       <div className="flex items-center justify-between max-w-[1440px] mx-auto h-16 sm:h-20 px-4 sm:px-8">
         {/* Brand Logo - Responsive Sizing */}
         <Link aria-label="Home Page" href="/" className="flex items-center shrink-0 group">
-          <Image 
-            src="/Logo.svg" 
-            alt="Logo" 
-            width={160} 
-            height={40} 
-            className="w-28 sm:w-36 h-auto transition-transform group-hover:scale-105" 
+          <Image
+            src="/Logo.svg"
+            alt="Logo"
+            width={160}
+            height={40}
+            className="w-28 sm:w-36 h-auto transition-transform group-hover:scale-105"
             priority
           />
         </Link>
@@ -45,35 +46,24 @@ export default function Navbar() {
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
             </Link>
           ))}
-          <SignedIn>
-            <Link
-              href="/dashboard"
-              className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors py-1 relative group"
-            >
-              Dashboard
-              <span className="absolute inset-x-0 bottom-0 h-0.5 bg-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
-            </Link>
-          </SignedIn>
+
         </nav>
 
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-3">
           <SignedOut>
-            <SignInButton mode="modal">
-              <Button 
-                variant="ghost" 
-                className="font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 rounded-xl px-4 xl:px-5"
-              >
-                Login
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button 
-                className="bg-primary hover:bg-slate-800 text-white font-semibold rounded-xl px-4 xl:px-5 shadow-sm hover:shadow transition-all"
-              >
-                Sign Up
-              </Button>
-            </SignUpButton>
+            <Link
+              href="/sign-in"
+              className="font-semibold text-slate-700  py-2 hover:text-primary hover:bg-slate-100/80 rounded-xl px-4 xl:px-5"
+            >
+              Login
+            </Link>
+            <Link
+              href="/sign-up"
+              className="bg-primary hover:bg-slate-800 py-2  text-white font-semibold rounded-xl px-4 xl:px-5 shadow-sm hover:shadow transition-all"
+            >
+              Sign Up
+            </Link>
           </SignedOut>
 
           <SignedIn>
@@ -142,15 +132,15 @@ export default function Navbar() {
             <div className="flex flex-col gap-3 pt-6 pb-4 relative z-10">
               <SignedOut>
                 <SignInButton mode="modal">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full h-11 sm:h-12 text-base font-semibold rounded-2xl border-slate-200 text-slate-800"
                   >
                     Login
                   </Button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <Button 
+                  <Button
                     className="w-full h-11 sm:h-12 text-base font-semibold bg-primary hover:bg-slate-800 text-white rounded-2xl shadow-md"
                   >
                     Sign Up

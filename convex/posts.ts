@@ -1,7 +1,13 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
-// Create a new post (Blog or News)
+
+export const getAllPosts = query({
+  handler: async (ctx) => {
+    return await ctx.db.query("posts").order("desc").collect();
+  },
+});
+
 export const createPost = mutation({
   args: {
     id: v.string(),
@@ -9,7 +15,7 @@ export const createPost = mutation({
     description: v.string(),
     category: v.string(),
     imageUrl: v.string(),
-    type: v.union(v.literal("news"), v.literal("blog")),
+    type: v.string(),
     createdAt: v.number(),
   },
   handler: async (ctx, args) => {
@@ -17,20 +23,43 @@ export const createPost = mutation({
   },
 });
 
-// Fetch all posts ordered by newest first
-export const getAllPosts = query({
-  handler: async (ctx) => {
-    return await ctx.db.query("posts").order("desc").collect();
+export const updatePost = mutation({
+  args: {
+    id: v.string(),
+    title: v.string(),
+    description: v.string(),
+    category: v.string(),
+    imageUrl: v.string(),
+    type: v.string(),
   },
-});
-
-// Delete a post by custom string ID or Convex ID
-export const deletePost = mutation({
-  args: { id: v.string() },
   handler: async (ctx, args) => {
     const post = await ctx.db
       .query("posts")
-      .filter((q) => q.eq(q.field("id"), args.id))
+      .withIndex("by_post_id", (q) => q.eq("id", args.id))
+      .first();
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    await ctx.db.patch(post._id, {
+      title: args.title,
+      description: args.description,
+      category: args.category,
+      imageUrl: args.imageUrl,
+      type: args.type,
+    });
+  },
+});
+
+export const deletePost = mutation({
+  args: {
+    id: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const post = await ctx.db
+      .query("posts")
+      .withIndex("by_post_id", (q) => q.eq("id", args.id))
       .first();
 
     if (post) {
