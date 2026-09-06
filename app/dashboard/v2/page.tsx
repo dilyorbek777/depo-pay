@@ -77,16 +77,6 @@ export default function DashboardPageV2() {
         cleanCardNumber.length === 16 ? { cardNumber: cleanCardNumber } : "skip"
     );
 
-    // Handle Stripe payment success return
-    useEffect(() => {
-        const sessionId = searchParams.get('session_id');
-        const success = searchParams.get('success');
-
-        if (success === 'true' && sessionId) {
-            handleStripePaymentSuccess(sessionId);
-        }
-    }, [searchParams]);
-
     const handleStripePaymentSuccess = async (sessionId: string) => {
         try {
             const response = await fetch(`/api/stripe/session?session_id=${sessionId}`);
@@ -103,6 +93,16 @@ export default function DashboardPageV2() {
             console.error('Failed to update balance after payment:', error);
         }
     };
+
+    // Handle Stripe payment success return
+    useEffect(() => {
+        const sessionId = searchParams.get('session_id');
+        const success = searchParams.get('success');
+
+        if (success === 'true' && sessionId) {
+            handleStripePaymentSuccess(sessionId);
+        }
+    }, [searchParams, handleStripePaymentSuccess]);
 
     // Helper Card Number Formatting
     const formatCardNumber = (value: string) => {
