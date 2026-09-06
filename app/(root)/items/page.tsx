@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "convex/react";
 import { useAuth } from "@clerk/nextjs";
@@ -199,9 +200,11 @@ export default function ItemsStorePage() {
                 >
                   <div>
                     <div className="relative aspect-[4/3] bg-muted overflow-hidden">
-                      <img
+                      <Image
                         src={product.imageUrl}
                         alt={product.name}
+                        width={400}
+                        height={300}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-md text-card-foreground border border-border font-extrabold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-sm">
@@ -297,9 +300,11 @@ export default function ItemsStorePage() {
                       className="flex gap-4 p-4 bg-muted/40 border border-border rounded-2xl"
                     >
                       <div className="w-16 h-16 rounded-xl overflow-hidden bg-muted shrink-0">
-                        <img
+                        <Image
                           src={item.imageUrl}
                           alt={item.name}
+                          width={64}
+                          height={64}
                           className="w-full h-full object-cover"
                         />
                       </div>

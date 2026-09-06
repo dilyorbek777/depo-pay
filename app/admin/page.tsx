@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { api } from "../../convex/_generated/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -327,9 +328,11 @@ export default function AdminPanelPage() {
                     >
                       <div className="flex gap-3">
                         {post.imageUrl ? (
-                          <img
+                          <Image
                             src={post.imageUrl}
                             alt={post.title}
+                            width={64}
+                            height={64}
                             className="w-16 h-16 rounded-xl object-cover shrink-0 border border-slate-200"
                           />
                         ) : (

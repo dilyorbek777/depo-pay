@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth, SignOutButton, useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import CardManagement from "@/components/dashboard/card-management";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,8 +29,6 @@ import {
     LogOut,
     ShoppingBag,
 } from "lucide-react";
-
-import Image from "next/image";
 
 export default function DashboardPageV2() {
     const { userId } = useAuth();
@@ -84,7 +83,7 @@ export default function DashboardPageV2() {
         cleanCardNumber.length === 16 ? { cardNumber: cleanCardNumber } : "skip"
     );
 
-    const handleStripePaymentSuccess = async (sessionId: string) => {
+    const handleStripePaymentSuccess = useCallback(async (sessionId: string) => {
         try {
             const response = await fetch(`/api/stripe/session?session_id=${sessionId}`);
             const session = await response.json();
@@ -99,7 +98,7 @@ export default function DashboardPageV2() {
         } catch (error) {
             console.error('Failed to update balance after payment:', error);
         }
-    };
+    }, [topUpCard]);
 
     // Handle Stripe payment success return
     useEffect(() => {
@@ -230,7 +229,7 @@ export default function DashboardPageV2() {
                     {/* User Info */}
                     <div className="flex items-center gap-3">
                         {user?.imageUrl && (
-                            <img src={user.imageUrl} alt="User Avatar" className="w-8 h-8 rounded-full border border-slate-200" />
+                            <Image src={user.imageUrl} alt="User Avatar" width={32} height={32} className="w-8 h-8 rounded-full border border-slate-200" />
                         )}
                         <span className="text-xs font-semibold text-slate-700 hidden sm:inline-block">
                             {user?.fullName || "User"}
@@ -735,9 +734,11 @@ export default function DashboardPageV2() {
                                 <div className="flex items-center gap-5">
                                     {user?.imageUrl ? (
                                         <div className="relative group">
-                                            <img
+                                            <Image
                                                 src={user.imageUrl}
                                                 alt="Profile"
+                                                width={80}
+                                                height={80}
                                                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-primary/10 shadow-md transition-transform group-hover:scale-105"
                                             />
                                             <span className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-card rounded-full" />
@@ -839,9 +840,11 @@ export default function DashboardPageV2() {
                                         >
                                             {item.imageUrl && (
                                                 <div className="relative w-full h-32 mb-3 rounded-xl overflow-hidden bg-muted">
-                                                    <img
+                                                    <Image
                                                         src={item.imageUrl}
                                                         alt={item.name}
+                                                        width={300}
+                                                        height={128}
                                                         className="w-full h-full object-cover"
                                                     />
                                                 </div>
@@ -913,9 +916,11 @@ export default function DashboardPageV2() {
                                 {/* Receiver Details Card */}
                                 <div className="bg-muted/40 border border-border/80 rounded-2xl p-4 flex items-center gap-3">
                                     {transferDetails.receiverAvatar ? (
-                                        <img
+                                        <Image
                                             src={transferDetails.receiverAvatar}
                                             alt="Receiver"
+                                            width={44}
+                                            height={44}
                                             className="w-11 h-11 rounded-xl object-cover border border-border"
                                         />
                                     ) : (

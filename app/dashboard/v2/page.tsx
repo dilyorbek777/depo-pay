@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth, SignOutButton, useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import CardManagement from "@/components/dashboard/card-management";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,8 +27,6 @@ import {
     Wallet,
     LogOut,
 } from "lucide-react";
-
-import Image from "next/image";
 
 export default function DashboardPageV2() {
     const { userId } = useAuth();
@@ -77,7 +76,7 @@ export default function DashboardPageV2() {
         cleanCardNumber.length === 16 ? { cardNumber: cleanCardNumber } : "skip"
     );
 
-    const handleStripePaymentSuccess = async (sessionId: string) => {
+    const handleStripePaymentSuccess = useCallback(async (sessionId: string) => {
         try {
             const response = await fetch(`/api/stripe/session?session_id=${sessionId}`);
             const session = await response.json();
@@ -92,7 +91,7 @@ export default function DashboardPageV2() {
         } catch (error) {
             console.error('Failed to update balance after payment:', error);
         }
-    };
+    }, [topUpCard]);
 
     // Handle Stripe payment success return
     useEffect(() => {
@@ -221,7 +220,7 @@ export default function DashboardPageV2() {
                     {/* User Info */}
                     <div className="flex items-center gap-3">
                         {user?.imageUrl && (
-                            <img src={user.imageUrl} alt="User Avatar" className="w-8 h-8 rounded-full border border-slate-200" />
+                            <Image src={user.imageUrl} alt="User Avatar" width={32} height={32} className="w-8 h-8 rounded-full border border-slate-200" />
                         )}
                         <span className="text-xs font-semibold text-slate-700 hidden sm:inline-block">
                             {user?.fullName || "User"}
