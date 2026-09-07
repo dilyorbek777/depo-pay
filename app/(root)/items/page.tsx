@@ -108,6 +108,14 @@ export default function ItemsStorePage() {
 
           <div className="flex items-center gap-3">
             <button
+              onClick={() => router.push("/items/marketplace")}
+              className="flex items-center gap-2 bg-secondary hover:bg-accent text-secondary-foreground px-4 py-2 rounded-2xl text-xs font-bold transition-all border border-border"
+            >
+              <ShoppingBag className="w-4 h-4 text-primary" />
+              <span className="hidden sm:inline">Marketplace</span>
+            </button>
+
+            <button
               onClick={() => router.push("/items/bought")}
               className="flex items-center gap-2 bg-secondary hover:bg-accent text-secondary-foreground px-4 py-2 rounded-2xl text-xs font-bold transition-all border border-border"
             >
@@ -222,7 +230,7 @@ export default function ItemsStorePage() {
                     </div>
                   </div>
 
-                  <div className="p-5 pt-0 border-t border-border/60 mt-4 flex items-center justify-between pt-4">
+                  <div className="p-5 border-t border-border/60 mt-4 flex items-center justify-between pt-4">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
                         Price

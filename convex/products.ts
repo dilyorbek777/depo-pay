@@ -18,6 +18,7 @@ export const createProduct = mutation({
     description: v.string(),
     quantity: v.number(),
     createdAt: v.number(),
+    paymentCardId: v.optional(v.id("cards")),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("products", args);

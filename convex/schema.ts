@@ -35,6 +35,7 @@ export default defineSchema({
     description: v.string(),
     quantity: v.number(),
     createdAt: v.number(),
+    paymentCardId: v.optional(v.id("cards")), // Card to receive payments for this product
   }).index("by_product_id", ["id"]),
 
   orders: defineTable({
@@ -95,6 +96,32 @@ export default defineSchema({
     .index("by_from_user", ["fromUserId"])
     .index("by_to_user", ["toUserId"])
     .index("by_timestamp", ["timestamp"]),
+
+  resaleListings: defineTable({
+    // Product reference
+    originalProductId: v.id("products"),
+    productName: v.string(),
+    productPrice: v.number(),
+    productCategory: v.string(),
+    productImageUrl: v.string(),
+    productDescription: v.string(),
+
+    // Resale details
+    sellerUserId: v.string(),
+    resalePrice: v.number(),
+    paymentCardId: v.optional(v.id("cards")), // Card to receive payment for this resale
+    condition: v.optional(v.string()), // Legacy field for backward compatibility
+    notes: v.optional(v.string()), // Seller's notes about the item
+
+    // Listing metadata
+    status: v.union(v.literal("active"), v.literal("sold"), v.literal("cancelled")),
+    createdAt: v.number(),
+    soldAt: v.optional(v.number()),
+    buyerUserId: v.optional(v.string()),
+  })
+    .index("by_seller", ["sellerUserId"])
+    .index("by_status", ["status"])
+    .index("by_created_at", ["createdAt"]),
 });
 
 

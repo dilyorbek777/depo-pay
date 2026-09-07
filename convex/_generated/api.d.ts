@@ -12,6 +12,7 @@ import type * as newsletter from "../newsletter.js";
 import type * as orders from "../orders.js";
 import type * as posts from "../posts.js";
 import type * as products from "../products.js";
+import type * as resale from "../resale.js";
 import type * as users from "../users.js";
 
 import type {
@@ -25,6 +26,7 @@ declare const fullApi: ApiFromModules<{
   orders: typeof orders;
   posts: typeof posts;
   products: typeof products;
+  resale: typeof resale;
   users: typeof users;
 }>;
 

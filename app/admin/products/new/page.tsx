@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useAuth } from "@clerk/nextjs";
 import { Input } from "@/components/ui/input";
 import { PackagePlus, Loader2 } from "lucide-react";
 
 export default function AdminNewProductPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const createProduct = useMutation(api.products.createProduct);
 
   const [loading, setLoading] = useState(false);
+  const [selectedPaymentCard, setSelectedPaymentCard] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -20,6 +23,11 @@ export default function AdminNewProductPage() {
     imageUrl: "",
     quantity: "10",
   });
+
+  const userCards = useQuery(
+    api.users.getUserCards,
+    userId ? { user_id: userId } : "skip"
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +43,7 @@ export default function AdminNewProductPage() {
         quantity: parseInt(formData.quantity, 10),
         id: `prod_${Date.now()}`,
         createdAt: Date.now(),
+        paymentCardId: selectedPaymentCard ? (selectedPaymentCard as any) : undefined,
       });
 
       router.push("/items");
@@ -113,6 +122,25 @@ export default function AdminNewProductPage() {
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
+        </div>
+
+        <div>
+          <label className="text-xs font-bold text-muted-foreground">Payment Card (to receive funds - Optional)</label>
+          <select
+            value={selectedPaymentCard}
+            onChange={(e) => setSelectedPaymentCard(e.target.value)}
+            className="w-full bg-background border border-border rounded-xl p-3 text-xs"
+          >
+            <option value="">No card selected (payments won't be received)</option>
+            {userCards && userCards.map((card: any) => (
+              <option key={card._id} value={card._id}>
+                {card.holderName} - •••• {card.number16digit.slice(-4)} (Balance: ${card.balance.toFixed(2)})
+              </option>
+            ))}
+          </select>
+          <p className="text-[10px] text-muted-foreground mt-1">
+            Select a card to receive payments for this product. Leave empty if not needed.
+          </p>
         </div>
 
         <button

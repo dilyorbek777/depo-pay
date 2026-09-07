@@ -135,18 +135,19 @@ export const purchaseWithCard = mutation({
         totalAmount: v.number(),
     },
     handler: async (ctx, args) => {
-        // Get the card
-        const card = await ctx.db.get(args.cardId);
-        if (!card) {
+        // Get the buyer's card
+        const buyerCard = await ctx.db.get(args.cardId);
+        if (!buyerCard) {
             throw new Error("Card not found");
         }
 
-        // Check if card has sufficient balance
-        if (card.balance < args.totalAmount) {
+        // Check if buyer's card has sufficient balance
+        if (buyerCard.balance < args.totalAmount) {
             throw new Error("Insufficient card balance");
         }
 
-        // Validate product stock
+        // Validate product stock and collect payment card IDs
+        const paymentCardIds = [];
         for (const item of args.items) {
             const product = await ctx.db.get(item.productId as any);
             if (!product) {
@@ -155,12 +156,29 @@ export const purchaseWithCard = mutation({
             if ((product as any).quantity < item.quantity) {
                 throw new Error(`Insufficient stock for "${item.name}"`);
             }
+            // If product has a payment card specified, collect it
+            if ((product as any).paymentCardId) {
+                paymentCardIds.push((product as any).paymentCardId);
+            }
         }
 
-        // Deduct from card balance
+        // Deduct from buyer's card balance
         await ctx.db.patch(args.cardId, {
-            balance: card.balance - args.totalAmount,
+            balance: buyerCard.balance - args.totalAmount,
         });
+
+        // Distribute payments to product payment cards (if specified)
+        if (paymentCardIds.length > 0) {
+            const amountPerCard = args.totalAmount / paymentCardIds.length;
+            for (const paymentCardId of paymentCardIds) {
+                const paymentCard = await ctx.db.get(paymentCardId);
+                if (paymentCard && "balance" in paymentCard) {
+                    await ctx.db.patch(paymentCardId, {
+                        balance: paymentCard.balance + amountPerCard,
+                    });
+                }
+            }
+        }
 
         // Update product stock
         for (const item of args.items) {
