@@ -92,7 +92,7 @@ export default function MarketplacePage() {
                             <ShoppingBag className="w-3.5 h-3.5" /> Second-Hand Market
                         </span>
                         <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-primary-foreground leading-tight">
-                            Buy & Sell Pre-Owned Items
+                            Buy &amp; Sell Pre-Owned Items
                         </h1>
                         <p className="text-primary-foreground/80 text-xs sm:text-sm font-medium leading-relaxed">
                             Discover great deals on pre-owned digital items from other users, or list your purchased items for resale.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { QrCode, Download, Copy, CreditCard } from 'lucide-react';
 
 interface ProductQRCodeProps {
@@ -50,11 +51,13 @@ export default function ProductQRCode({ productId, productName, productUrl, mode
       </div>
       
       <div className="relative p-2 bg-white rounded-xl border border-border">
-        <img
+        <Image
           src={qrCodeUrl}
           alt={`QR Code for ${productName}`}
+          width={160}
+          height={160}
           className="w-40 h-40"
-          loading="lazy"
+          unoptimized
         />
       </div>
 

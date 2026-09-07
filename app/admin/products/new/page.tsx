@@ -131,7 +131,7 @@ export default function AdminNewProductPage() {
             onChange={(e) => setSelectedPaymentCard(e.target.value)}
             className="w-full bg-background border border-border rounded-xl p-3 text-xs"
           >
-            <option value="">No card selected (payments won't be received)</option>
+            <option value="">No card selected (payments won&apos;t be received)</option>
             {userCards && userCards.map((card: any) => (
               <option key={card._id} value={card._id}>
                 {card.holderName} - •••• {card.number16digit.slice(-4)} (Balance: ${card.balance.toFixed(2)})
