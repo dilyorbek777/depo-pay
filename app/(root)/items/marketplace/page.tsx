@@ -144,7 +144,7 @@ export default function MarketplacePage() {
                                     
                                     {listing.notes && (
                                         <p className="text-xs text-primary font-medium italic">
-                                            "{listing.notes}"
+                                            &ldquo;{listing.notes}&rdquo;
                                         </p>
                                     )}
 
