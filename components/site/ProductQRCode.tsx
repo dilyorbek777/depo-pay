@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { QrCode, Download, Copy } from 'lucide-react';
+import { QrCode, Download, Copy, CreditCard } from 'lucide-react';
 
 interface ProductQRCodeProps {
   productId: string;
   productName: string;
   productUrl: string;
+  mode?: 'view' | 'checkout';
 }
 
-export default function ProductQRCode({ productId, productName, productUrl }: ProductQRCodeProps) {
+export default function ProductQRCode({ productId, productName, productUrl, mode = 'view' }: ProductQRCodeProps) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(productUrl)}`;
@@ -34,11 +35,18 @@ export default function ProductQRCode({ productId, productName, productUrl }: Pr
     }
   };
 
+  const title = mode === 'checkout' ? 'Quick Checkout QR Code' : 'Product QR Code';
+  const subtitle = mode === 'checkout' ? 'Scan to buy this product instantly' : 'Scan to view product details';
+
   return (
     <div className="flex flex-col items-center gap-3 p-4 bg-background rounded-2xl border border-border">
       <div className="flex items-center gap-2 text-foreground">
-        <QrCode className="w-4 h-4 text-primary" />
-        <span className="text-xs font-bold uppercase tracking-wider">Product QR Code</span>
+        {mode === 'checkout' ? (
+          <CreditCard className="w-4 h-4 text-primary" />
+        ) : (
+          <QrCode className="w-4 h-4 text-primary" />
+        )}
+        <span className="text-xs font-bold uppercase tracking-wider">{title}</span>
       </div>
       
       <div className="relative p-2 bg-white rounded-xl border border-border">
@@ -77,7 +85,7 @@ export default function ProductQRCode({ productId, productName, productUrl }: Pr
       </div>
 
       <p className="text-[10px] text-muted-foreground text-center font-medium">
-        Scan to view product details
+        {subtitle}
       </p>
     </div>
   );

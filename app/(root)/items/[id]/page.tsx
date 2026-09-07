@@ -158,6 +158,13 @@ export default function ItemDetailsPage() {
               productName={product.name}
               productUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/items/${product._id}`}
             />
+
+            <ProductQRCode
+              productId={product._id}
+              productName={product.name}
+              productUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/items/checkout?productId=${product._id}`}
+              mode="checkout"
+            />
           </div>
 
           {/* Product Specifications & Details */}
