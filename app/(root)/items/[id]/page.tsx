@@ -23,6 +23,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Image from "next/image";
+import ProductQRCode from "@/components/site/ProductQRCode";
 
 export default function ItemDetailsPage() {
   const params = useParams();
@@ -151,6 +152,12 @@ export default function ItemDetailsPage() {
                 </span>
               )}
             </div>
+
+            <ProductQRCode
+              productId={product._id}
+              productName={product.name}
+              productUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/items/${product._id}`}
+            />
           </div>
 
           {/* Product Specifications & Details */}
