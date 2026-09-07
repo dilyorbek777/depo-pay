@@ -19,23 +19,38 @@ export default function CheckoutRedirectPage() {
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [productAdded, setProductAdded] = useState(false);
+  const [hasProcessed, setHasProcessed] = useState(false);
 
   const product = useQuery(api.products.getProductById, { id: productId });
 
   useEffect(() => {
     const processCheckout = async () => {
+      // Prevent multiple executions
+      if (hasProcessed) return;
+
       if (!productId) {
         setError('No product specified');
         setIsProcessing(false);
         return;
       }
 
+      // Wait for product to load
       if (!product) {
-        // Product might still be loading
-        return;
+        // Product is still loading or doesn't exist
+        if (product === undefined) {
+          // Still loading, wait
+          return;
+        } else {
+          // Product doesn't exist
+          setError('Product not found');
+          setIsProcessing(false);
+          return;
+        }
       }
 
       try {
+        setHasProcessed(true);
+        
         // Add product to cart
         addToCart({
           id: product._id,
@@ -46,6 +61,7 @@ export default function CheckoutRedirectPage() {
         });
 
         setProductAdded(true);
+        setIsProcessing(false);
         
         // Redirect to cart page after a short delay
         setTimeout(() => {
@@ -59,7 +75,7 @@ export default function CheckoutRedirectPage() {
     };
 
     processCheckout();
-  }, [productId, product, addToCart, router]);
+  }, [productId, product, addToCart, router, hasProcessed]);
 
   if (error) {
     return (
