@@ -60,6 +60,12 @@ export default defineSchema({
     status: v.optional(v.string()), // "active" or "unsubscribed"
   }).index("by_email", ["email"]),
 
+  categories: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    createdAt: v.number(),
+  }).index("by_slug", ["slug"]),
+
   cards: defineTable({
     // Card details
     number16digit: v.string(), // Unique 16-digit card number

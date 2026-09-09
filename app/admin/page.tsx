@@ -8,6 +8,8 @@ import Image from "next/image";
 import { api } from "../../convex/_generated/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { UploadButton } from "@/utils/uploadthing";
+import type { OurFileRouter } from "@/uploadthing";
 import {
   Newspaper,
   Mail,
@@ -24,13 +26,15 @@ import {
   Loader2,
   Package,
   PackagePlus,
+  Upload,
+  FolderPlus,
 } from "lucide-react";
 
 export default function AdminPanelPage() {
   const { userId } = useAuth();
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "subscribers" | "products">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "subscribers" | "products" | "categories">("posts");
 
   const userData = useQuery(api.users.getUserByClerkId, userId ? { user_id: userId } : "skip");
 
@@ -69,15 +73,23 @@ export default function AdminPanelPage() {
   // Search State
   const [subscriberSearch, setSubscriberSearch] = useState("");
 
+  // Category Form State
+  const [categoryName, setCategoryName] = useState("");
+  const [isCategorySubmitting, setIsCategorySubmitting] = useState(false);
+  const [categoryFormFeedback, setCategoryFormFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
   // Convex Queries & Mutations
   const posts = useQuery(api.posts.getAllPosts) ?? [];
   const subscribers = useQuery(api.newsletter.getSubscribers) ?? [];
   const products = useQuery(api.products.getAllProducts) ?? [];
+  const categories = useQuery(api.categories.getAllCategories) ?? [];
   const userCards = useQuery(api.users.getUserCards, userId ? { user_id: userId } : "skip");
   const createPost = useMutation(api.posts.createPost);
   const deletePost = useMutation(api.posts.deletePost);
   const createProduct = useMutation(api.products.createProduct);
   const deleteProduct = useMutation(api.products.deleteProduct);
+  const createCategory = useMutation(api.categories.createCategory);
+  const deleteCategory = useMutation(api.categories.deleteCategory);
 
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -175,6 +187,45 @@ export default function AdminPanelPage() {
       await deleteProduct({ id: productId });
     } catch (error) {
       console.error("Failed to delete product:", error);
+    }
+  };
+
+  const handleCreateCategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCategoryFormFeedback(null);
+
+    if (!categoryName.trim()) {
+      setCategoryFormFeedback({ type: "error", message: "Please enter a category name." });
+      return;
+    }
+
+    setIsCategorySubmitting(true);
+
+    try {
+      const slug = categoryName.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+      await createCategory({
+        name: categoryName.trim(),
+        slug,
+      });
+
+      setCategoryFormFeedback({
+        type: "success",
+        message: "Category created successfully!",
+      });
+      setCategoryName("");
+    } catch (error: any) {
+      setCategoryFormFeedback({ type: "error", message: error.message || "Failed to create category." });
+    } finally {
+      setIsCategorySubmitting(false);
+    }
+  };
+
+  const handleDeleteCategory = async (categoryId: string) => {
+    if (!confirm("Are you sure you want to delete this category?")) return;
+    try {
+      await deleteCategory({ id: categoryId as any });
+    } catch (error) {
+      console.error("Failed to delete category:", error);
     }
   };
 
@@ -337,18 +388,41 @@ export default function AdminPanelPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="post-img" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                      Image URL
+                    <Label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Image
                     </Label>
-                    <Input
-                      id="post-img"
-                      type="url"
-                      placeholder="https://..."
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-semibold"
-                      required
-                    />
+                    {imageUrl ? (
+                      <div className="relative">
+                        <Image
+                          src={imageUrl}
+                          alt="Preview"
+                          width={200}
+                          height={200}
+                          className="w-full h-40 object-cover rounded-xl border border-slate-200"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setImageUrl("")}
+                          className="absolute top-2 right-2 p-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <UploadButton<OurFileRouter, "imageUploader">
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          if (res && res[0]) {
+                            setImageUrl(res[0].url);
+                          }
+                        }}
+                        onUploadError={(error: Error) => {
+                          console.error(error);
+                          setFormFeedback({ type: "error", message: "Failed to upload image" });
+                        }}
+                        className="ut-button:bg-primary ut-button:text-white ut-button:ut-readying:bg-primary/50 ut-button:hover:bg-primary/90 ut-button:ut-uploading:bg-primary/50"
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -548,18 +622,41 @@ export default function AdminPanelPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="product-img" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Image URL
+                  <Label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Image
                   </Label>
-                  <Input
-                    id="product-img"
-                    type="url"
-                    placeholder="https://..."
-                    value={productFormData.imageUrl}
-                    onChange={(e) => setProductFormData({ ...productFormData, imageUrl: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
-                    required
-                  />
+                  {productFormData.imageUrl ? (
+                    <div className="relative">
+                      <Image
+                        src={productFormData.imageUrl}
+                        alt="Preview"
+                        width={200}
+                        height={200}
+                        className="w-full h-40 object-cover rounded-xl border border-slate-200"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setProductFormData({ ...productFormData, imageUrl: "" })}
+                        className="absolute top-2 right-2 p-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <UploadButton<OurFileRouter, "imageUploader">
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        if (res && res[0]) {
+                          setProductFormData({ ...productFormData, imageUrl: res[0].url });
+                        }
+                      }}
+                      onUploadError={(error: Error) => {
+                        console.error(error);
+                        setProductFormFeedback({ type: "error", message: "Failed to upload image" });
+                      }}
+                      className="ut-button:bg-primary ut-button:text-white ut-button:ut-readying:bg-primary/50 ut-button:hover:bg-primary/90 ut-button:ut-uploading:bg-primary/50"
+                    />
+                  )}
                 </div>
 
                 <div>
