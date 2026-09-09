@@ -47,6 +47,7 @@ export default function ItemsStorePage() {
 
   const allProducts = useQuery(api.products.getAllProducts) ?? [];
   const purchasedProductIds = useQuery(api.orders.getPurchasedProductIds, { userId: userId || localStorageUserId }) ?? [];
+  const resaleListings = useQuery(api.resale.getActiveResaleListings) ?? [];
 
   // Exclude purchased items and sold out items from store display
   const availableProducts = allProducts.filter(
@@ -60,6 +61,15 @@ export default function ItemsStorePage() {
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  const filteredResaleListings = resaleListings.filter((listing: any) => {
+    const matchesSearch =
+      listing.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      listing.productDescription.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || listing.productCategory === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });
@@ -184,87 +194,160 @@ export default function ItemsStorePage() {
           </div>
         </div>
 
-        {filteredProducts.length === 0 ? (
+        {filteredProducts.length === 0 && filteredResaleListings.length === 0 ? (
           <div className="text-center py-20 bg-card rounded-3xl border border-dashed border-border shadow-sm">
             <ShoppingBag className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-            <h3 className="text-base font-extrabold text-foreground mb-1">No products available</h3>
+            <h3 className="text-base font-extrabold text-foreground mb-1">No items available</h3>
             <p className="text-muted-foreground text-xs font-medium">
               {purchasedProductIds.length > 0 && availableProducts.length === 0
                 ? "You have purchased all available items in the store!"
-                : "No items listed in the store yet. Check back soon!"}
+                : "No items listed yet. Check back soon!"}
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => {
-              const cartItem = cart.find((i) => i.id === product._id);
-              const inCartCount = cartItem?.quantity || 0;
+          <>
+            {/* Regular Products */}
+            {filteredProducts.length > 0 && (
+              <>
+                <h2 className="text-lg font-extrabold text-foreground mb-4">New Products</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filteredProducts.map((product) => {
+                    const cartItem = cart.find((i) => i.id === product._id);
+                    const inCartCount = cartItem?.quantity || 0;
 
-              return (
-                <Link
-                  key={product._id}
-                  href={`/items/${product._id}`}
-                  className="bg-card rounded-3xl border border-border shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-primary/30"
-                >
-                  <div>
-                    <div className="relative aspect-[4/3] bg-muted overflow-hidden">
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name}
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-md text-card-foreground border border-border font-extrabold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-sm">
-                        {product.category}
-                      </span>
-                    </div>
+                    return (
+                      <Link
+                        key={product._id}
+                        href={`/items/${product._id}`}
+                        className="bg-card rounded-3xl border border-border shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group hover:border-primary/30"
+                      >
+                        <div>
+                          <div className="relative aspect-[4/3] bg-muted overflow-hidden">
+                            <Image
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={400}
+                              height={300}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-md text-card-foreground border border-border font-extrabold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-sm">
+                              {product.category}
+                            </span>
+                          </div>
 
-                    <div className="p-5 space-y-1.5">
-                      <h3 className="font-extrabold text-base text-card-foreground line-clamp-1 group-hover:text-primary transition-colors">
-                        {product.name}
-                      </h3>
-                      <p className="text-xs text-muted-foreground font-medium line-clamp-2 leading-relaxed">
-                        {product.description}
-                      </p>
-                    </div>
-                  </div>
+                          <div className="p-5 space-y-1.5">
+                            <h3 className="font-extrabold text-base text-card-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                              {product.name}
+                            </h3>
+                            <p className="text-xs text-muted-foreground font-medium line-clamp-2 leading-relaxed">
+                              {product.description}
+                            </p>
+                          </div>
+                        </div>
 
-                  <div className="p-5 border-t border-border/60 mt-4 flex items-center justify-between pt-4">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
-                        Price
-                      </span>
-                      <div className="text-lg font-black text-foreground">
-                        ${product.price.toFixed(2)}
-                      </div>
-                    </div>
+                        <div className="p-5 border-t border-border/60 mt-4 flex items-center justify-between pt-4">
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
+                              Price
+                            </span>
+                            <div className="text-lg font-black text-foreground">
+                              ${product.price.toFixed(2)}
+                            </div>
+                          </div>
 
-                    <button
-                      onClick={(e) => handleAddToCart(e, product)}
-                      className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all active:scale-95 ${
-                        inCartCount > 0
-                          ? "bg-secondary text-secondary-foreground border border-border"
-                          : "bg-primary text-primary-foreground hover:opacity-90 shadow-md shadow-primary/10"
-                      }`}
+                          <button
+                            onClick={(e) => handleAddToCart(e, product)}
+                            className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all active:scale-95 ${
+                              inCartCount > 0
+                                ? "bg-secondary text-secondary-foreground border border-border"
+                                : "bg-primary text-primary-foreground hover:opacity-90 shadow-md shadow-primary/10"
+                            }`}
+                          >
+                            {inCartCount > 0 ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-primary" />
+                                <span>Added ({inCartCount})</span>
+                              </>
+                            ) : (
+                              <>
+                                <Plus className="w-3.5 h-3.5" />
+                                <span>Add to Cart</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+
+            {/* Resale Items */}
+            {filteredResaleListings.length > 0 && (
+              <>
+                <h2 className="text-lg font-extrabold text-foreground mb-4 mt-8">Resale Marketplace</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filteredResaleListings.map((listing: any) => (
+                    <Link
+                      key={listing._id}
+                      href={`/items/marketplace`}
+                      className="bg-card rounded-3xl border border-primary/30 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
                     >
-                      {inCartCount > 0 ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-primary" />
-                          <span>Added ({inCartCount})</span>
-                        </>
-                      ) : (
-                        <>
+                      <div>
+                        <div className="relative aspect-[4/3] bg-muted overflow-hidden">
+                          <Image
+                            src={listing.productImageUrl}
+                            alt={listing.productName}
+                            width={400}
+                            height={300}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <span className="absolute top-3 left-3 bg-card/90 backdrop-blur-md text-card-foreground border border-border font-extrabold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-sm">
+                            {listing.productCategory}
+                          </span>
+                          <span className="absolute top-3 right-3 bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-md">
+                            Resale
+                          </span>
+                        </div>
+
+                        <div className="p-5 space-y-1.5">
+                          <h3 className="font-extrabold text-base text-card-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                            {listing.productName}
+                          </h3>
+                          <p className="text-xs text-muted-foreground font-medium line-clamp-2 leading-relaxed">
+                            {listing.productDescription}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="p-5 border-t border-border/60 mt-4 flex items-center justify-between pt-4">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
+                            Original: ${listing.productPrice.toFixed(2)}
+                          </span>
+                          <div className="text-lg font-black text-emerald-600">
+                            ${listing.resalePrice.toFixed(2)}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push("/items/marketplace");
+                          }}
+                          className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all active:scale-95 hover:bg-emerald-600 shadow-md"
+                        >
                           <Plus className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                          <span>View Deal</span>
+                        </button>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </>
         )}
       </main>
 

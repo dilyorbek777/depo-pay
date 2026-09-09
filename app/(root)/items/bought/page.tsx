@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useAuth } from "@clerk/nextjs";
 import { useUserId } from "@/lib/useUserId";
 import {
     ArrowLeft,
@@ -19,7 +20,8 @@ import Image from "next/image";
 
 export default function BoughtItemsPage() {
     const router = useRouter();
-    const userId = useUserId();
+    const { userId: clerkUserId } = useAuth();
+    const localStorageUserId = useUserId();
     const [isMounted, setIsMounted] = useState(false);
     const [showResaleModal, setShowResaleModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -28,17 +30,16 @@ export default function BoughtItemsPage() {
     const [notes, setNotes] = useState("");
 
     const createResaleListing = useMutation(api.resale.createResaleListing);
-    const sellerListings = useQuery(api.resale.getSellerResaleListings, { sellerUserId: userId || "" }) ?? [];
+    const sellerListings = useQuery(api.resale.getSellerResaleListings, { sellerUserId: localStorageUserId || "" }) ?? [];
     const userCards = useQuery(
         api.users.getUserCards,
-        userId ? { user_id: userId } : "skip"
+        clerkUserId ? { user_id: clerkUserId } : "skip"
     );
+    const purchasedItems = useQuery(api.orders.getPurchasedItems, { userId: localStorageUserId || "" }) ?? [];
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
-
-    const purchasedItems = useQuery(api.orders.getPurchasedItems, { userId }) ?? [];
 
     const handleOpenResaleModal = (product: any) => {
         setSelectedProduct(product);
@@ -49,12 +50,13 @@ export default function BoughtItemsPage() {
     };
 
     const handleSubmitResale = async () => {
-        if (!selectedProduct || !userId) return;
+        if (!selectedProduct || !clerkUserId) return;
 
         try {
             await createResaleListing({
                 originalProductId: selectedProduct._id,
-                sellerUserId: userId,
+                sellerUserId: localStorageUserId,
+                clerkUserId: clerkUserId,
                 resalePrice: parseFloat(resalePrice),
                 paymentCardId: selectedPaymentCard ? (selectedPaymentCard as any) : undefined,
                 notes: notes || undefined,
@@ -73,6 +75,11 @@ export default function BoughtItemsPage() {
                 listing.originalProductId === productId && listing.status === "active"
         );
     };
+
+    // Filter out items that have active resale listings
+    const availablePurchasedItems = purchasedItems.filter((item: any) =>
+        !hasActiveListing(item._id)
+    );
 
     if (!isMounted) {
         return (
@@ -108,7 +115,7 @@ export default function BoughtItemsPage() {
 
                         <div className="flex items-center gap-2 font-black text-base text-foreground">
                             <PackageCheck className="w-5 h-5 text-primary" />
-                            <span>Purchased Items ({purchasedItems.length})</span>
+                            <span>Purchased Items ({availablePurchasedItems.length})</span>
                         </div>
                     </div>
                 </div>
@@ -124,23 +131,34 @@ export default function BoughtItemsPage() {
                     </p>
                 </section>
 
-                {purchasedItems.length === 0 ? (
+                {availablePurchasedItems.length === 0 ? (
                     <div className="text-center py-20 bg-card rounded-3xl border border-dashed border-border shadow-sm max-w-xl mx-auto">
                         <PackageCheck className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                        <h3 className="text-lg font-extrabold text-foreground mb-1">No purchases found</h3>
+                        <h3 className="text-lg font-extrabold text-foreground mb-1">No items available</h3>
                         <p className="text-muted-foreground text-xs font-medium mb-6">
-                            You haven&apos;t purchased any items from the marketplace yet.
+                            {purchasedItems.length > 0 && availablePurchasedItems.length === 0
+                                ? "All your purchased items are currently listed for resale."
+                                : "You haven&apos;t purchased any items from the marketplace yet."}
                         </p>
-                        <button
-                            onClick={() => router.push("/items")}
-                            className="px-6 py-2.5 bg-primary text-primary-foreground rounded-2xl text-xs font-bold shadow-md shadow-primary/20"
-                        >
-                            Browse Store
-                        </button>
+                        {purchasedItems.length > 0 && availablePurchasedItems.length === 0 ? (
+                            <button
+                                onClick={() => router.push("/items/marketplace")}
+                                className="px-6 py-2.5 bg-primary text-primary-foreground rounded-2xl text-xs font-bold shadow-md shadow-primary/20"
+                            >
+                                View Marketplace
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => router.push("/items")}
+                                className="px-6 py-2.5 bg-primary text-primary-foreground rounded-2xl text-xs font-bold shadow-md shadow-primary/20"
+                            >
+                                Browse Store
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {purchasedItems.map((item) => (
+                        {availablePurchasedItems.map((item) => (
                             <div
                                 key={item._id}
                                 className="bg-card rounded-3xl border border-border shadow-sm overflow-hidden flex flex-col justify-between"
@@ -259,18 +277,30 @@ export default function BoughtItemsPage() {
                                 <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-2">
                                     Payment Card (to receive funds)
                                 </label>
-                                <select
-                                    value={selectedPaymentCard}
-                                    onChange={(e) => setSelectedPaymentCard(e.target.value)}
-                                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary focus:border-transparent"
-                                >
-                                    <option value="">Select a card</option>
-                                    {userCards && userCards.map((card: any) => (
-                                        <option key={card._id} value={card._id}>
-                                            {card.holderName} - •••• {card.number16digit.slice(-4)} (Balance: ${card.balance.toFixed(2)})
-                                        </option>
-                                    ))}
-                                </select>
+                                {!userCards || userCards.length === 0 ? (
+                                    <div className="p-4 bg-muted/40 border border-border rounded-xl text-center">
+                                        <p className="text-xs text-muted-foreground mb-2">No cards available</p>
+                                        <button
+                                            onClick={() => router.push("/dashboard")}
+                                            className="text-xs font-bold text-primary hover:underline"
+                                        >
+                                            Create a card first
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <select
+                                        value={selectedPaymentCard}
+                                        onChange={(e) => setSelectedPaymentCard(e.target.value)}
+                                        className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    >
+                                        <option value="">Select a card</option>
+                                        {userCards.map((card: any) => (
+                                            <option key={card._id} value={card._id}>
+                                                {card.holderName} - •••• {card.number16digit.slice(-4)} (Balance: ${card.balance.toFixed(2)})
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
                             </div>
 
                             <div>

@@ -22,13 +22,15 @@ import {
   AlertCircle,
   ShieldAlert,
   Loader2,
+  Package,
+  PackagePlus,
 } from "lucide-react";
 
 export default function AdminPanelPage() {
   const { userId } = useAuth();
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "subscribers">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "subscribers" | "products">("posts");
 
   const userData = useQuery(api.users.getUserByClerkId, userId ? { user_id: userId } : "skip");
 
@@ -51,14 +53,31 @@ export default function AdminPanelPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formFeedback, setFormFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
+  // Product Form State
+  const [productFormData, setProductFormData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    imageUrl: "",
+    quantity: "10",
+  });
+  const [selectedPaymentCard, setSelectedPaymentCard] = useState("");
+  const [isProductSubmitting, setIsProductSubmitting] = useState(false);
+  const [productFormFeedback, setProductFormFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
   // Search State
   const [subscriberSearch, setSubscriberSearch] = useState("");
 
   // Convex Queries & Mutations
   const posts = useQuery(api.posts.getAllPosts) ?? [];
   const subscribers = useQuery(api.newsletter.getSubscribers) ?? [];
+  const products = useQuery(api.products.getAllProducts) ?? [];
+  const userCards = useQuery(api.users.getUserCards, userId ? { user_id: userId } : "skip");
   const createPost = useMutation(api.posts.createPost);
   const deletePost = useMutation(api.posts.deletePost);
+  const createProduct = useMutation(api.products.createProduct);
+  const deleteProduct = useMutation(api.products.deleteProduct);
 
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +122,59 @@ export default function AdminPanelPage() {
       await deletePost({ id: postId });
     } catch (error) {
       console.error("Failed to delete post:", error);
+    }
+  };
+
+  const handleCreateProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProductFormFeedback(null);
+
+    if (!productFormData.name || !productFormData.description || !productFormData.price || !productFormData.category || !productFormData.imageUrl) {
+      setProductFormFeedback({ type: "error", message: "Please fill in all required fields." });
+      return;
+    }
+
+    setIsProductSubmitting(true);
+
+    try {
+      await createProduct({
+        name: productFormData.name,
+        description: productFormData.description,
+        price: parseFloat(productFormData.price),
+        category: productFormData.category,
+        imageUrl: productFormData.imageUrl,
+        quantity: parseInt(productFormData.quantity, 10),
+        id: `prod_${Date.now()}`,
+        createdAt: Date.now(),
+        paymentCardId: selectedPaymentCard ? (selectedPaymentCard as any) : undefined,
+      });
+
+      setProductFormFeedback({
+        type: "success",
+        message: "Product created successfully!",
+      });
+      setProductFormData({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        imageUrl: "",
+        quantity: "10",
+      });
+      setSelectedPaymentCard("");
+    } catch (error: any) {
+      setProductFormFeedback({ type: "error", message: error.message || "Failed to create product." });
+    } finally {
+      setIsProductSubmitting(false);
+    }
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (!confirm("Are you sure you want to delete this product?")) return;
+    try {
+      await deleteProduct({ id: productId });
+    } catch (error) {
+      console.error("Failed to delete product:", error);
     }
   };
 
@@ -157,6 +229,14 @@ export default function AdminPanelPage() {
               }`}
             >
               <Newspaper className="w-4 h-4" /> Posts & News
+            </button>
+            <button
+              onClick={() => setActiveTab("products")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                activeTab === "products" ? "bg-white text-primary shadow-sm" : "text-slate-600 hover:text-primary"
+              }`}
+            >
+              <Package className="w-4 h-4" /> Products
             </button>
             <button
               onClick={() => setActiveTab("subscribers")}
@@ -365,6 +445,228 @@ export default function AdminPanelPage() {
                         onClick={() => handleDeletePost(post.id)}
                         className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all shrink-0 self-end sm:self-start"
                         title="Delete Post"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === "products" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 h-fit">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-5 mb-6">
+                <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
+                  <PackagePlus className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-extrabold text-primary tracking-tight">Create Product</h2>
+                  <p className="text-xs text-slate-500">Add new products to the store.</p>
+                </div>
+              </div>
+
+              {productFormFeedback && (
+                <div
+                  className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-semibold mb-6 ${
+                    productFormFeedback.type === "success"
+                      ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
+                      : "bg-rose-50 border border-rose-200 text-rose-700"
+                  }`}
+                >
+                  {productFormFeedback.type === "success" ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+                  <span>{productFormFeedback.message}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleCreateProduct} className="space-y-4">
+                <div>
+                  <Label htmlFor="product-name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Product Title
+                  </Label>
+                  <Input
+                    id="product-name"
+                    type="text"
+                    placeholder="e.g. Next.js Starter Kit"
+                    value={productFormData.name}
+                    onChange={(e) => setProductFormData({ ...productFormData, name: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="product-price" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Price ($)
+                    </Label>
+                    <Input
+                      id="product-price"
+                      type="number"
+                      step="0.01"
+                      placeholder="0.00"
+                      value={productFormData.price}
+                      onChange={(e) => setProductFormData({ ...productFormData, price: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="product-quantity" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Quantity
+                    </Label>
+                    <Input
+                      id="product-quantity"
+                      type="number"
+                      min="0"
+                      placeholder="10"
+                      value={productFormData.quantity}
+                      onChange={(e) => setProductFormData({ ...productFormData, quantity: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="product-category" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Category
+                  </Label>
+                  <Input
+                    id="product-category"
+                    type="text"
+                    placeholder="e.g. Software"
+                    value={productFormData.category}
+                    onChange={(e) => setProductFormData({ ...productFormData, category: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="product-img" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Image URL
+                  </Label>
+                  <Input
+                    id="product-img"
+                    type="url"
+                    placeholder="https://..."
+                    value={productFormData.imageUrl}
+                    onChange={(e) => setProductFormData({ ...productFormData, imageUrl: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="product-desc" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Description
+                  </Label>
+                  <textarea
+                    id="product-desc"
+                    rows={4}
+                    placeholder="Product description..."
+                    value={productFormData.description}
+                    onChange={(e) => setProductFormData({ ...productFormData, description: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="payment-card" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Payment Card (Optional)
+                  </Label>
+                  <select
+                    id="payment-card"
+                    value={selectedPaymentCard}
+                    onChange={(e) => setSelectedPaymentCard(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="">No card selected</option>
+                    {userCards && userCards.map((card: any) => (
+                      <option key={card._id} value={card._id}>
+                        {card.holderName} - •••• {card.number16digit.slice(-4)} (Balance: ${card.balance.toFixed(2)})
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-[10px] text-slate-500 mt-1">Select a card to receive payments for this product.</p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isProductSubmitting}
+                  className="w-full bg-primary hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isProductSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <PackagePlus className="w-4 h-4" />}
+                  <span>Create Product</span>
+                </button>
+              </form>
+            </div>
+
+            <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-5 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-indigo-50 text-primary rounded-2xl">
+                    <Package className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-extrabold text-primary tracking-tight">Product Catalog</h2>
+                    <p className="text-xs text-slate-500">Manage store inventory.</p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold px-3 py-1 bg-slate-100 rounded-full text-slate-600">
+                  Total: {products.length}
+                </span>
+              </div>
+
+              {products.length === 0 ? (
+                <div className="text-center py-12 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                  <Package className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                  <p className="text-slate-500 text-sm font-medium">No products in the catalog yet.</p>
+                </div>
+              ) : (
+                <div className="space-y-4 max-h-[600px] overflow-y-auto pr-1">
+                  {products.map((product) => (
+                    <div
+                      key={product._id}
+                      className="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-all flex flex-col sm:flex-row gap-4 justify-between items-start"
+                    >
+                      <div className="flex gap-3">
+                        {product.imageUrl ? (
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name}
+                            width={64}
+                            height={64}
+                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-slate-200"
+                          />
+                        ) : (
+                          <div className="w-16 h-16 rounded-xl bg-slate-200 flex items-center justify-center shrink-0">
+                            <ImageIcon className="w-6 h-6 text-slate-400" />
+                          </div>
+                        )}
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-semibold text-primary flex items-center gap-1">
+                              <Tag className="w-3 h-3" /> {product.category}
+                            </span>
+                            <span className="text-xs font-bold text-emerald-600">${product.price.toFixed(2)}</span>
+                          </div>
+                          <h3 className="font-extrabold text-sm text-primary line-clamp-1">{product.name}</h3>
+                          <p className="text-xs text-slate-500 line-clamp-2">{product.description}</p>
+                          <p className="text-[10px] font-mono text-slate-400 pt-1">Stock: {product.quantity} | ID: {product.id}</p>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => handleDeleteProduct(product.id)}
+                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all shrink-0 self-end sm:self-start"
+                        title="Delete Product"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

@@ -6,6 +6,7 @@ export const createResaleListing = mutation({
   args: {
     originalProductId: v.id("products"),
     sellerUserId: v.string(),
+    clerkUserId: v.optional(v.string()), // For card validation
     resalePrice: v.number(),
     paymentCardId: v.optional(v.id("cards")),
     notes: v.optional(v.string()),
@@ -17,16 +18,27 @@ export const createResaleListing = mutation({
       throw new Error("Product not found");
     }
 
-    // Verify the user has purchased this product
-    const purchasedOrders = await ctx.db
-      .query("orders")
-      .withIndex("by_user_id", (q) => q.eq("userId", args.sellerUserId))
-      .filter((q) => q.eq(q.field("status"), "paid"))
-      .collect();
+    // Verify the user has purchased this product (check both localStorage ID and Clerk ID)
+    const userIdsToCheck = [args.sellerUserId];
+    if (args.clerkUserId) {
+      userIdsToCheck.push(args.clerkUserId);
+    }
 
-    const hasPurchased = purchasedOrders.some((order) =>
-      order.items.some((item) => item.productId === args.originalProductId)
-    );
+    let hasPurchased = false;
+    for (const userId of userIdsToCheck) {
+      const purchasedOrders = await ctx.db
+        .query("orders")
+        .withIndex("by_user_id", (q) => q.eq("userId", userId))
+        .filter((q) => q.eq(q.field("status"), "paid"))
+        .collect();
+
+      if (purchasedOrders.some((order) =>
+        order.items.some((item) => item.productId === args.originalProductId)
+      )) {
+        hasPurchased = true;
+        break;
+      }
+    }
 
     if (!hasPurchased) {
       throw new Error("You must purchase this product before reselling it");
@@ -35,7 +47,12 @@ export const createResaleListing = mutation({
     // Verify the payment card belongs to the seller (if provided)
     if (args.paymentCardId) {
       const card = await ctx.db.get(args.paymentCardId);
-      if (!card || card.user_id !== args.sellerUserId) {
+      if (!card) {
+        throw new Error("Invalid payment card");
+      }
+      // Use clerkUserId for validation if provided, otherwise use sellerUserId
+      const expectedUserId = args.clerkUserId || args.sellerUserId;
+      if (card.user_id !== expectedUserId) {
         throw new Error("Invalid payment card");
       }
     }
