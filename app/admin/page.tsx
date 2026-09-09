@@ -269,7 +269,7 @@ export default function AdminPanelPage() {
             <div className="p-2 bg-primary text-white rounded-xl shadow-md shadow-indigo-200">
               <ShieldAlert className="w-5 h-5" />
             </div>
-            <span className="font-extrabold text-lg text-primary tracking-tight">Admin Dashboard</span>
+            <span className="font-extrabold text-lg text-primary tracking-tight">Admin Dashboard page</span>
           </div>
 
           <nav className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
